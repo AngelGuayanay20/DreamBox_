@@ -49,7 +49,7 @@ function obtenerProductos() {
                 stock: 12,
                 plataforma: ["Nintendo"],
                 genero: "Aventura",
-                imagen: "https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/software/switch/70010000063714/1c4bcbc63b8e0761b9556c0b2ce6d6a6f2ad33a19fce4c9edc8bd8bc42e6ac86",
+                imagen: "https://i.ytimg.com/vi/gp9aY09li1s/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCKs1QqnvLBAnzop7KvoPsvqedjlQ",
                 descripcion: "Explora los cielos y las tierras de Hyrule en la nueva aventura de Link."
             },
             {
@@ -59,7 +59,7 @@ function obtenerProductos() {
                 stock: 15,
                 plataforma: ["Nintendo"],
                 genero: "Carreras",
-                imagen: "https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/software/switch/70010000000153/29af796f733dd50aa6360bbb1e659bfa085d7f2ff6f6d64f172c2cca4d3ecfaa",
+                imagen: "https://i.ytimg.com/vi/HulSYumqceU/maxresdefault.jpg",
                 descripcion: "El clásico de carreras de Nintendo, ahora con todo el contenido descargable incluido."
             },
             {
