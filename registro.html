@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DreamBox | Crear cuenta</title>
+    
+    <link rel="icon" href="/assets/dreambox-cabin-34x29.jpg" type="image/jpg">
+    <link rel="stylesheet" href="styles3.css">
+   
+
+
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-container">
+
+        <div class="auth-logo">
+            <span style="color:#fff;">DREAM</span><span style="background:linear-gradient(90deg,#a855f7,#d946ef); -webkit-background-clip:text; background-clip:text; color:transparent;">BOX</span>
+        </div>
+
+        <h1>Crear cuenta</h1>
+        <p>Regístrate para comprar videojuegos y reservar tu cabina.</p>
+
+        <form onsubmit="registrarUsuario(event)">
+
+            <label for="registro-nombre">Nombre completo</label>
+            <input
+                id="registro-nombre"
+                type="text"
+                placeholder="Tu nombre"
+                required
+            >
+
+            <label for="registro-email">Correo electrónico</label>
+            <input
+                id="registro-email"
+                type="email"
+                placeholder="tucorreo@ejemplo.com"
+                required
+            >
+
+            <label for="registro-password">Contraseña</label>
+            <input
+                id="registro-password"
+                type="password"
+                placeholder="Mínimo 6 caracteres"
+                minlength="6"
+                required
+            >
+
+            <button type="submit" class="auth-button">Crear cuenta</button>
+
+        </form>
+
+        <p class="auth-link" style="text-align:center; margin-top:18px;">
+            ¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a>
+        </p>
+
+        <a href="index.html" class="back-home">← Volver al inicio</a>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,64 +1,335 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamBox</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DreamBox | La cabina portátil con IA</title>
+
+    <link rel="stylesheet" href="styles3.css">
 
 </head>
-<body>
-    <header>
-        <h1>🎮 DreamBox</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Inicio</a></li>
-                <li><a href="juegos.html">Juegos</a></li>
-                <li><a href="#">Contactos</a></li>
-            </ul>
+
+<body class="db-body">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="db-header">
+
+        <div class="db-logo">
+            <a href="index.html">
+                <span class="dream">DREAM</span><span class="box">BOX</span>
+            </a>
+        </div>
+
+        <nav class="db-nav">
+            <a href="index.html">INICIO</a>
+            <a href="#caracteristicas">CARACTERÍSTICAS</a>
+            <a href="#experiencias">EXPERIENCIAS</a>
+            <a href="catalogo.html">TIENDA</a>
+            <a href="#contacto">CONTACTO</a>
         </nav>
+
+        <div class="db-header-actions">
+
+            <button class="db-reserve-btn" onclick="document.getElementById('experiencias').scrollIntoView({behavior:'smooth'})">
+                RESERVAR AHORA
+            </button>
+
+            <button class="db-cart-btn" onclick="abrirCarrito()">
+                🛒
+                <span id="contador-carrito" style="position:absolute; top:-6px; right:-6px; font-size:11px;">0</span>
+            </button>
+
+            <a href="login.html" id="login-menu" class="db-user-icon" title="Iniciar sesión">👤</a>
+
+            <span id="usuario-menu"></span>
+
+            <button
+                id="logout-menu"
+                class="db-logout-btn"
+                style="display:none;"
+                onclick="cerrarSesion()"
+            >
+                Cerrar sesión
+            </button>
+
+        </div>
+
     </header>
 
-    <section class="banner">
-        <h2>Bienvenido a DreamBox</h2>
-        <p>Descubre los mejores titulos para PC, PlayStation,Xbox y Nintendo. Tu destino para los mejores juegos y experiencias de entretenimiento.</p>
-       <button><a href=""></a>Explorar Juegos</button> 
+
+    <!-- ================= HERO (idéntico a la imagen de referencia) ================= -->
+
+    <section class="db-hero" id="experiencias">
+
+        <div class="db-hero-content">
+
+            <div class="db-badge">
+                ⚙️ LA + INMERSIÓN <span class="accent">SIN LÍMITES</span>
+            </div>
+
+            <h1>
+                La cabina portátil con
+                <span class="grad-purple">IA</span> que crea videojuegos
+                <span class="grad-lime">únicos</span> para ti
+            </h1>
+
+            <p class="db-hero-desc">
+                <strong>DreamBox</strong> es una cabina portátil e inteligente que combina
+                inmersión total e inteligencia artificial para que vivas experiencias
+                de videojuegos creadas especialmente para ti.
+            </p>
+
+            <div class="db-hero-ctas">
+                <a href="catalogo.html" class="db-btn-fill">🎮 Descubrir experiencias</a>
+                <a href="#como-funciona" class="db-btn-outline">Cómo funciona <span class="play-circle">▶</span></a>
+            </div>
+
+        </div>
+
+        <div class="db-hero-side">
+
+            <div class="db-hero-visual">
+                <img src="assets/dreambox-cabin.jpg" alt="Cabina DreamBox con inmersión total e IA">
+            </div>
+
+            <div class="db-stats">
+
+                <div class="db-stat-card c-purple">
+                    <span class="icon">⏱️</span>
+                    <div>
+                        <strong>8/3+ <span class="stat-label">HORAS</span></strong>
+                        <small>DE DIVERSIÓN GARANTIZADA</small>
+                    </div>
+                </div>
+
+                <div class="db-stat-card c-cyan">
+                    <span class="icon">🕶️</span>
+                    <div>
+                        <strong>INMERSIÓN TOTAL</strong>
+                        <small>CON IA AVANZADA</small>
+                    </div>
+                </div>
+
+                <div class="db-stat-card c-lime">
+                    <span class="icon">🔋</span>
+                    <div>
+                        <strong>100% <span class="stat-label">PORTÁTIL</span></strong>
+                        <small>LLEVA LA ACCIÓN A DONDE VAYAS</small>
+                    </div>
+                </div>
+
+                <div class="db-stat-card c-purple">
+                    <span class="icon">🥽</span>
+                    <div>
+                        <strong>REALIDAD VIRTUAL</strong>
+                        <small>Y SALAS GAMING INTEGRADAS</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+       
+
     </section>
 
-    <section class="juegos">
-        
-        <h2>Juegos Destacados</h2>
 
-        <div class="contenedor">
+    <!-- ================= INFO: DE QUÉ SE TRATA / NECESIDAD / QUIÉN / PARECIDO ================= -->
 
-            <div class="tarjeta">
-                <img src="https://upload.wikimedia.org/wikipedia/en/8/8f/Meccha_Chameleon_Steam_Header.jpg" alt="Juego 1">
-                <h3>Meccha Chameleon</h3>
-                <p>Es un videojuego multijugador de escondidas en el que los jugadores deben pintar a su personaje para camuflarse con el entorno y evitar ser encontrados por los buscadores.</p>
-            </div>
+    <section class="db-info" id="caracteristicas">
 
-             <div class="tarjeta">
-                <img src="https://media.es.wired.com/photos/6880fadda69582ec829f6bca/master/w_1920,c_limit/ea-sports-fc-26-Cover.jpg" alt="Juego 2">
-                <h3>EA SPORTS FC 26 </h3>
-                <p>Es un simulador de fútbol que ofrece una experiencia más realista con mejoras en la jugabilidad, inteligencia artificial y modos de juego como Carrera, Ultimate Team y Clubes. Incluye miles de jugadores, equipos y ligas oficiales para disfrutar del deporte de forma competitiva o casual.</p>
-            </div>
+        <div class="db-info-col">
 
-             <div class="tarjeta">
-                <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/252490/header.jpg?t=1781536981" alt="Juego 3">
-                <h3>Rust</h3>
-                <p>Es un juego de supervivencia multijugador en el que debes recolectar recursos, construir refugios, fabricar herramientas y enfrentarte a otros jugadores y al entorno para sobrevivir en un mundo abierto desafiante.</p>
-            </div>
+            <div class="icon-circle">🎮</div>
+
+            <h3>¿DE QUÉ SE TRATA?</h3>
+
+            <p>
+                Es una cabina portátil que ofrece una experiencia gaming inmersiva
+                gracias a su tecnología de punta y a su inteligencia artificial que
+                crea videojuegos personalizados en tiempo real según tus gustos y
+                emociones del jugador.
+            </p>
+
+        </div>
+
+        <div class="db-info-col">
+
+            <div class="icon-circle">🎯</div>
+
+            <h3>¿QUE NECESIDAD RESUELVE?</h3>
+
+            <p>
+                Muchas personas quieren vivir experiencias de videojuegos más
+                inmersivas y personalizadas, pero no tienen acceso a equipos
+                costosos o a juegos que realmente se adapten a sus gustos.
+                DreamBox hace que cualquiera pueda vivirlo.
+            </p>
+
+        </div>
+
+        <div class="db-info-col">
+
+            <div class="icon-circle">👥</div>
+
+            <h3>¿QUIÉN LO USA?</h3>
+
+            <ul>
+                <li>Gamers</li>
+                <li>Streamers y creadores de contenido</li>
+                <li>Aficionados a la tecnología</li>
+                <li>Centros comerciales</li>
+                <li>Eventos y torneos</li>
+            </ul>
+
+        </div>
+
+        <div class="db-info-col">
+
+            <div class="icon-circle">🥽</div>
+
+            <h3>¿QUÉ HAY PARECIDO?</h3>
+
+            <p>
+                Existen cabinas de realidad virtual, salas gaming y plataformas
+                con IA que generan contenido. Sin embargo, ninguna combina una
+                cabina portátil + IA que crea experiencias únicas.
+            </p>
 
         </div>
 
     </section>
 
-   <footer>
-        <p>&copy; 2026 DreamBox. | Todos los derechos reservados.</p>
+
+    <!-- ================= BARRA INFERIOR ================= -->
+
+    <section class="db-bottombar" id="como-funciona">
+
+        <div class="db-bottombar-item">
+            <span class="icon">🎓</span>
+            <span>
+                TECNOLOGÍA
+                <span class="muted">DE ÚLTIMA GENERACIÓN</span>
+            </span>
+        </div>
+
+        <div class="db-bottombar-item">
+            <span class="icon">📦</span>
+            <span>
+                EXPERIENCIAS
+                <span class="muted">PERSONALIZADAS</span>
+            </span>
+        </div>
+
+        <div class="db-bottombar-item">
+            <span class="icon">⚡</span>
+            <span>
+                LISTA EN MINUTOS
+                <span class="muted">FÁCIL DE USAR</span>
+            </span>
+        </div>
+
+        <div class="db-bottombar-item">
+            <span class="icon">🛡️</span>
+            <span>
+                SEGURA Y CONFIABLE
+                <span class="muted">PARA TODOS</span>
+            </span>
+        </div>
+
+    </section>
+
+
+    <!-- ================= TIENDA DE VIDEOJUEGOS (sección funcional agregada) ================= -->
+
+    <section class="db-store-section" id="tienda">
+
+        <div class="db-store-header">
+
+            <p class="eyebrow">TIENDA DREAMBOX</p>
+
+            <h2>Videojuegos para tu cabina</h2>
+
+            <span>Compra los títulos más populares para PC, PlayStation, Xbox y Nintendo.</span>
+
+        </div>
+
+        <div class="db-platform-pills">
+            <a href="catalogo.html">Todos</a>
+            <a href="catalogo.html?plataforma=PC">🖥️ PC</a>
+            <a href="catalogo.html?plataforma=PlayStation">🎮 PlayStation</a>
+            <a href="catalogo.html?plataforma=Xbox">🟢 Xbox</a>
+            <a href="catalogo.html?plataforma=Nintendo">🔴 Nintendo</a>
+        </div>
+
+        <div class="product-grid" id="catalogo-productos">
+        </div>
+
+        <div class="db-store-cta">
+            <a href="catalogo.html" class="db-btn-fill">Ver catálogo completo</a>
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer id="contacto">
+
+        <div class="footer-logo">
+            <span style="color:#fff;">DREAM</span><span style="background:linear-gradient(90deg,#a855f7,#d946ef); -webkit-background-clip:text; background-clip:text; color:transparent;">BOX</span>
+        </div>
+
+        <p>No juegas un videojuego... vives uno creado especialmente para ti.</p>
+
+        <p class="copyright">© 2026 DreamBox. Todos los derechos reservados.</p>
+
     </footer>
 
+
+    <!-- ================= CARRITO ================= -->
+
+    <div class="cart-overlay" id="carrito-overlay">
+
+        <div class="cart">
+
+            <div class="cart-header">
+                <h2>🛒 Tu carrito</h2>
+                <button onclick="cerrarCarrito()">✕</button>
+            </div>
+
+            <div class="cart-products" id="productos-carrito">
+            </div>
+
+            <div class="cart-footer">
+
+                <div class="cart-total">
+                    <span>Total</span>
+                    <strong id="total-carrito">$0.00</strong>
+                </div>
+
+                <button class="checkout-button" onclick="finalizarCompra()">
+                    Finalizar compra
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
 </body>
+
 </html>

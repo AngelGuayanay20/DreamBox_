@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DreamBox | Iniciar sesión</title>
+    
+    <link rel="icon" href="/assets/dreambox-cabin-34x29.jpg" type="image/jpg">
+    <link rel="stylesheet" href="styles3.css">
+   
+
+
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-container">
+
+        <div class="auth-logo">
+            <span style="color:#fff;">DREAM</span><span style="background:linear-gradient(90deg,#a855f7,#d946ef); -webkit-background-clip:text; background-clip:text; color:transparent;">BOX</span>
+        </div>
+
+        <h1>Iniciar sesión</h1>
+        <p>Ingresa a tu cuenta para comprar y reservar experiencias.</p>
+
+        <form onsubmit="iniciarSesion(event)">
+
+            <label for="login-email">Correo electrónico</label>
+            <input
+                id="login-email"
+                type="email"
+                placeholder="tucorreo@ejemplo.com"
+                required
+            >
+
+            <label for="login-password">Contraseña</label>
+            <input
+                id="login-password"
+                type="password"
+                placeholder="••••••••"
+                required
+            >
+
+            <button type="submit" class="auth-button">Iniciar sesión</button>
+
+        </form>
+
+        <p class="auth-link" style="text-align:center; margin-top:18px;">
+            ¿No tienes cuenta? <a href="registro.html">Crear cuenta</a>
+        </p>
+
+        <a href="index.html" class="back-home">← Volver al inicio</a>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

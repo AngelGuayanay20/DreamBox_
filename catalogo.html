@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DreamBox | Tienda de videojuegos</title>
+
+   <link rel="icon" href="/assets/dreambox-cabin-34x29.jpg" type="image/jpg">
+   <link rel="stylesheet" href="styles3.css">
+  
+</head>
+
+<body class="db-body">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="db-header">
+
+        <div class="db-logo">
+            <a href="index.html">
+                <span class="dream">DREAM</span><span class="box">BOX</span>
+            </a>
+        </div>
+
+        <nav class="db-nav">
+            <a href="index.html">INICIO</a>
+            <a href="index.html#caracteristicas">CARACTERÍSTICAS</a>
+            <a href="index.html#experiencias">EXPERIENCIAS</a>
+            <a href="catalogo.html">TIENDA</a>
+            <a href="index.html#contacto1">CONTACTO</a>
+        </nav>
+
+        <div class="db-header-actions">
+
+            <button class="db-cart-btn" onclick="abrirCarrito()">
+                🛒
+                <span id="contador-carrito" style="position:absolute; top:-6px; right:-6px; font-size:11px;">0</span>
+            </button>
+
+            <a href="login.html" id="login-menu" class="db-user-icon" title="Iniciar sesión">👤</a>
+
+            <span id="usuario-menu"></span>
+
+            <button
+                id="logout-menu"
+                class="db-logout-btn"
+                style="display:none;"
+                onclick="cerrarSesion()"
+            >
+                Cerrar sesión
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= CATÁLOGO ================= -->
+
+    <main class="catalog-page">
+
+        <div class="catalog-header">
+            <h1>Tienda de videojuegos</h1>
+            <span>Encuentra tus próximos títulos para PC, PlayStation, Xbox y Nintendo.</span>
+        </div>
+
+        <div class="search-container">
+            <input
+                type="text"
+                id="buscador"
+                placeholder="Buscar videojuego..."
+                oninput="filtrarProductos()"
+            >
+        </div>
+
+        <div class="filters">
+            <button class="filter active" onclick="filtrarPlataforma('Todos', this)">Todos</button>
+            <button class="filter" onclick="filtrarPlataforma('PC', this)">🖥️ PC</button>
+            <button class="filter" onclick="filtrarPlataforma('PlayStation', this)">🎮 PlayStation</button>
+            <button class="filter" onclick="filtrarPlataforma('Xbox', this)">🟢 Xbox</button>
+            <button class="filter" onclick="filtrarPlataforma('Nintendo', this)">🔴 Nintendo</button>
+        </div>
+
+        <div class="product-grid" id="catalogo-productos">
+        </div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-logo">
+            <span style="color:#fff;">DREAM</span><span style="background:linear-gradient(90deg,#a855f7,#d946ef); -webkit-background-clip:text; background-clip:text; color:transparent;">BOX</span>
+        </div>
+
+        <p>No juegas un videojuego... vives uno creado especialmente para ti.</p>
+
+        <p class="copyright">© 2026 DreamBox. Todos los derechos reservados.</p>
+
+    </footer>
+
+
+    <!-- ================= CARRITO ================= -->
+
+    <div class="cart-overlay" id="carrito-overlay">
+
+        <div class="cart">
+
+            <div class="cart-header">
+                <h2>🛒 Tu carrito</h2>
+                <button onclick="cerrarCarrito()">✕</button>
+            </div>
+
+            <div class="cart-products" id="productos-carrito">
+            </div>
+
+            <div class="cart-footer">
+
+                <div class="cart-total">
+                    <span>Total</span>
+                    <strong id="total-carrito">$0.00</strong>
+                </div>
+
+                <button class="checkout-button" onclick="finalizarCompra()">
+                    Finalizar compra
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
