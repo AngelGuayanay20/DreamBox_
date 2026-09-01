@@ -334,6 +334,75 @@ a {
     display: block;
 }
 
+.stats {
+    flex: 0 0 190px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #100e1a;
+    border: 1.5px solid var(--db-border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    transition: 0.25s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+}
+
+.stat-card .icon {
+    font-size: 20px;
+}
+
+.stat-card strong {
+    display: block;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+    line-height: 1.25;
+}
+
+.stat-card .stat-label {
+    color: #fff;
+}
+
+.stat-card small {
+    color: var(--db-muted);
+    font-size: 10.5px;
+    line-height: 1.4;
+    letter-spacing: 0.2px;
+}
+
+.stat-card.c-purple {
+    border-color: rgba(168, 85, 247, 0.45);
+}
+
+.stat-card.c-purple strong {
+    color: var(--db-purple2);
+}
+
+.stat-card.c-cyan {
+    border-color: rgba(79, 158, 255, 0.45);
+}
+
+.stat-card.c-cyan strong {
+    color: var(--db-blue);
+}
+
+.stat-card.c-lime {
+    border-color: rgba(204, 255, 51, 0.45);
+}
+
+.stat-card.c-lime strong {
+    color: var(--db-lime);
+}
+
 /* =========================================
    PLATAFORMAS
 ========================================= */
@@ -1747,76 +1816,6 @@ td input {
     --db-blue: #4f9eff;
     --db-border: #23202f;
     --db-muted: #9997a8;
-}
-
-/* Stat cards laterales */
-.stats {
-    flex: 0 0 190px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 14px;
-}
-
-.stat-card {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    background: #100e1a;
-    border: 1.5px solid var(--db-border);
-    border-radius: 14px;
-    padding: 14px 16px;
-    transition: 0.25s;
-}
-
-.stat-card:hover {
-    transform: translateY(-3px);
-}
-
-.stat-card .icon {
-    font-size: 20px;
-}
-
-.stat-card strong {
-    display: block;
-    font-size: 15px;
-    letter-spacing: 0.3px;
-    line-height: 1.25;
-}
-
-.stat-card .stat-label {
-    color: #fff;
-}
-
-.stat-card small {
-    color: var(--db-muted);
-    font-size: 10.5px;
-    line-height: 1.4;
-    letter-spacing: 0.2px;
-}
-
-.stat-card.c-purple {
-    border-color: rgba(168, 85, 247, 0.45);
-}
-
-.stat-card.c-purple strong {
-    color: var(--db-purple2);
-}
-
-.stat-card.c-cyan {
-    border-color: rgba(79, 158, 255, 0.45);
-}
-
-.stat-card.c-cyan strong {
-    color: var(--db-blue);
-}
-
-.stat-card.c-lime {
-    border-color: rgba(204, 255, 51, 0.45);
-}
-
-.stat-card.c-lime strong {
-    color: var(--db-lime);
 }
 
 /* =========================================================

@@ -19,40 +19,42 @@
 
 </head>
 
-<body class="db-body">
+<body class="body">
 
     <!-- ================= HEADER ================= -->
 
-    <header class="db-header">
+    <header class="header">
 
-        <div class="db-logo">
+        <div class="logo">
             <a href="index.html">
-                <span class="dream">DREAM</span><span class="box">BOX</span>
+                <p> DREAM<span>BOX</span></p>
             </a>
         </div>
 
-        <nav class="db-nav">
+        <nav class="nav">
             <a href="index.html">INICIO</a>
-            <a href="index.html#caracteristicas">CARACTERÍSTICAS</a>
-            <a href="index.html#experiencias">EXPERIENCIAS</a>
+            <a href="#caracteristicas">CARACTERÍSTICAS</a>
+            <a href="#experiencias">EXPERIENCIAS</a>
             <a href="catalogo.html">TIENDA</a>
-            <a href="index.html#contacto">CONTACTO</a>
+            <a href="#contacto">CONTACTO</a>
         </nav>
 
-        <div class="db-header-actions">
+        <div class="header-actions">
 
-            <button class="db-cart-btn" onclick="abrirCarrito()">
+            <button class="cart-button" title="Carrito" onclick="abrirCarrito()">
                 🛒
-                <span id="contador-carrito" style="position:absolute; top:-6px; right:-6px; font-size:11px;">0</span>
+                <span id="contador-carrito">0</span>
             </button>
 
-            <a href="login.html" id="login-menu" class="db-user-icon" title="Iniciar sesión">👤</a>
+            <button class="user-icon">
+                <a href="login.html" id="login-menu" title="Iniciar sesión">👤</a>
+            </button>
 
             <span id="usuario-menu"></span>
 
             <button
                 id="logout-menu"
-                class="db-logout-btn"
+                class="logout-button"
                 style="display:none;"
                 onclick="cerrarSesion()"
             >
