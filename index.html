@@ -25,7 +25,7 @@
 
         <div class="logo">
             <a href="index.html">
-                <p> DREAM<span> BOX</span></p>
+                <p> DREAM<span>BOX</span></p>
             </a>
         </div>
 
@@ -43,18 +43,20 @@
                 RESERVAR AHORA
             </button>
 
-            <button class="cart-button" onclick="abrirCarrito()">
+            <button class="cart-button" title="Carrito" onclick="abrirCarrito()">
                 🛒
-                <span id="contador-carrito" style="position:absolute; top:-6px; right:-6px; font-size:11px;">0</span>
+                <span id="contador-carrito">0</span>
             </button>
 
-            <a href="login.html" id="login-menu" class="db-user-icon" title="Iniciar sesión">👤</a>
+            <button class="user-icon">
+                <a href="login.html" id="login-menu" title="Iniciar sesión">👤</a>
+            </button>
 
             <span id="usuario-menu"></span>
 
             <button
                 id="logout-menu"
-                class="db-logout-btn"
+                class="logout-button"
                 style="display:none;"
                 onclick="cerrarSesion()"
             >
@@ -68,12 +70,12 @@
 
     <!-- ================= HERO ================= -->
 
-    <section class="db-hero" id="experiencias">
+    <section class="hero" id="experiencias">
 
-        <div class="db-hero-content">
+        <div class="hero-content">
 
-            <div class="db-badge">
-                ⚙️ LA + INMERSIÓN <span class="accent">SIN LÍMITES</span>
+            <div class="badge">
+                🤖 IA  <span class="accent">+</span> 🌌 INMERSIÓN SIN LÍMITES 
             </div>
 
             <h1>
@@ -82,36 +84,36 @@
                 <span class="grad-lime">únicos</span> para ti
             </h1>
 
-            <p class="db-hero-desc">
+            <p class="hero-description">
                 <strong>DreamBox</strong> es una cabina portátil e inteligente que combina
                 inmersión total e inteligencia artificial para que vivas experiencias
                 de videojuegos creadas especialmente para ti.
             </p>
 
-            <div class="db-hero-ctas">
-                <a href="catalogo.html" class="db-btn-fill">🎮 Descubrir experiencias</a>
-                <a href="#como-funciona" class="db-btn-outline">Cómo funciona <span class="play-circle">▶</span></a>
+            <div class="hero-buttons">
+                <a href="catalogo.html" class="button-xp">🎮 Descubrir experiencias</a>
+                <a href="#como-funciona" class="button-funtion">Cómo funciona <span class="play-circle">▶</span></a>
             </div>
 
         </div>
 
-        <div class="db-hero-side">
+        <div class="hero-side">
 
-            <div class="db-hero-visual">
+            <div class="hero-visual">
                 <img src="./assets/dreambox-cabin.jpg" alt="Cabina DreamBox con inmersión total e IA">
             </div>
 
-            <div class="db-stats">
+            <div class="stats">
 
-                <div class="db-stat-card c-purple">
+                <div class="stat-card c-purple">
                     <span class="icon">⏱️</span>
                     <div>
-                        <strong> ∞ <span class="stat-label"> HORAS </span></strong>
+                        <strong>HORAS ILIMITADAS </strong>
                         <small>DE DIVERSIÓN GARANTIZADA</small>
                     </div>
                 </div>
 
-                <div class="db-stat-card c-cyan">
+                <div class="stat-card c-cyan">
                     <span class="icon">🕶️</span>
                     <div>
                         <strong>INMERSIÓN TOTAL</strong>
@@ -119,7 +121,7 @@
                     </div>
                 </div>
 
-                <div class="db-stat-card c-lime">
+                <div class="stat-card c-lime">
                     <span class="icon">🔋</span>
                     <div>
                         <strong>100% <span class="stat-label">PORTÁTIL</span></strong>
@@ -127,7 +129,7 @@
                     </div>
                 </div>
 
-                <div class="db-stat-card c-purple">
+                <div class="stat-card c-purple">
                     <span class="icon">🥽</span>
                     <div>
                         <strong>REALIDAD VIRTUAL</strong>
@@ -143,6 +145,43 @@
 
     </section>
 
+    <!-- ================= BARRA INFERIOR ================= -->
+
+    <section class="db-bottombar" id="como-funciona">
+
+        <div class="db-bottombar-item">
+            <span class="icon">🎓</span>
+            <span>
+                TECNOLOGÍA
+                <span class="muted">DE ÚLTIMA GENERACIÓN</span>
+            </span>
+        </div>
+
+        <div class="db-bottombar-item">
+            <span class="icon">📦</span>
+            <span>
+                EXPERIENCIAS
+                <span class="muted">PERSONALIZADAS</span>
+            </span>
+        </div>
+
+        <div class="db-bottombar-item">
+            <span class="icon">⚡</span>
+            <span>
+                LISTA EN MINUTOS
+                <span class="muted">FÁCIL DE USAR</span>
+            </span>
+        </div>
+
+        <div class="db-bottombar-item">
+            <span class="icon">🛡️</span>
+            <span>
+                SEGURA Y CONFIABLE
+                <span class="muted">PARA TODOS</span>
+            </span>
+        </div>
+
+    </section>
 
     <!-- ================= INFO: DE QUÉ SE TRATA / NECESIDAD / QUIÉN / PARECIDO ================= -->
 
@@ -203,7 +242,7 @@
             <p>
                 Existen cabinas de realidad virtual, salas gaming y plataformas
                 con IA que generan contenido. Sin embargo, ninguna combina una
-                cabina portátil + IA que crea experiencias únicas.
+                cabina portátil + IA que crea experiencias únicas, como en DreamBox.
             </p>
 
         </div>
@@ -211,46 +250,8 @@
     </section>
 
 
-    <!-- ================= BARRA INFERIOR ================= -->
 
-    <section class="db-bottombar" id="como-funciona">
-
-        <div class="db-bottombar-item">
-            <span class="icon">🎓</span>
-            <span>
-                TECNOLOGÍA
-                <span class="muted">DE ÚLTIMA GENERACIÓN</span>
-            </span>
-        </div>
-
-        <div class="db-bottombar-item">
-            <span class="icon">📦</span>
-            <span>
-                EXPERIENCIAS
-                <span class="muted">PERSONALIZADAS</span>
-            </span>
-        </div>
-
-        <div class="db-bottombar-item">
-            <span class="icon">⚡</span>
-            <span>
-                LISTA EN MINUTOS
-                <span class="muted">FÁCIL DE USAR</span>
-            </span>
-        </div>
-
-        <div class="db-bottombar-item">
-            <span class="icon">🛡️</span>
-            <span>
-                SEGURA Y CONFIABLE
-                <span class="muted">PARA TODOS</span>
-            </span>
-        </div>
-
-    </section>
-
-
-    <!-- ================= TIENDA DE VIDEOJUEGOS (sección funcional agregada) ================= -->
+    <!-- ================= TIENDA DE VIDEOJUEGOS ================= -->
 
     <section class="db-store-section" id="tienda">
 
