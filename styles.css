@@ -29,19 +29,21 @@ a {
 ========================================= */
 
 .header {
-    height: 75px;
-    padding: 0 7%;
+    height: 90px;
+    padding: 5px 6%;
 
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+    justify-content:space-around;
+    gap: 0px;
 
     background: #101018;
 
     border-bottom: 1px solid #272738;
 
     position: sticky;
-    top: 0;
+    top: 0px;
 
     z-index: 1000;
 }
@@ -51,29 +53,30 @@ a {
     font-weight: 900;
     letter-spacing: 1px;
 }
-
-.logo span {
+.logo span  {
     color: #a855f7;
 }
 
-.menu {
+.nav {
     display: flex;
-    gap: 30px;
+    
+    flex-wrap: wrap;
+    gap: 18px;
 }
 
-.menu a {
+.nav a {
     color: #bbbbc7;
     font-size: 15px;
     transition: 0.3s;
 }
 
-.menu a:hover {
+.nav a:hover {
     color: #a855f7;
 }
 
 .cart-button {
-    background: #ccff33;
-    color: #0a0a12;
+    background: #1d1e1a;
+    color: #ababb9;
 
     border: none;
     border-radius: 7px;
@@ -89,7 +92,7 @@ a {
 
 .cart-button:hover {
     transform: translateY(-2px);
-    background: #b0e62e;
+    background: #e6712e;
 }
 
 #contador-carrito {
@@ -107,27 +110,6 @@ a {
 /* =========================================
    HERO
 ========================================= */
-
-.hero {
-    min-height: 580px;
-
-    display: flex;
-    align-items: center;
-
-    padding: 60px 8%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #080811 10%,
-            rgba(8, 8, 17, 0.8) 45%,
-            rgba(8, 8, 17, 0.3)
-        ),
-        url("https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg");
-
-    background-size: cover;
-    background-position: center;
-}
 
 .hero-content {
     max-width: 650px;
@@ -1622,7 +1604,7 @@ td input {
     margin-left: 10px;
 }
 /* =========================================================
-   DREAMBOX - HOME (réplica exacta del diseño proporcionado)
+   DREAMBOX - HOME 
 ========================================================= */
 
 :root {
@@ -1635,11 +1617,6 @@ td input {
     --db-border: #23202f;
     --db-muted: #9997a8;
 }
-
-.db-body {
-    background: var(--db-bg);
-}
-
 /* HEADER */
 .db-header {
     position: sticky;
@@ -2095,7 +2072,7 @@ td input {
 }
 
 /* =========================================================
-   DREAMBOX - TIENDA (sección insertada tras el diseño original)
+   DREAMBOX - TIENDA 
 ========================================================= */
 
 .db-store-section {
