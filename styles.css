@@ -1401,43 +1401,6 @@ footer p {
     margin-bottom: 35px;
 }
 
-
-.stat-card {
-    background: #12121c;
-
-    border: 1px solid #292939;
-
-    border-radius: 10px;
-
-    padding: 25px;
-
-    display: flex;
-
-    gap: 15px;
-
-    align-items: center;
-}
-
-
-.stat-card > span {
-    font-size: 35px;
-}
-
-
-.stat-card small {
-    display: block;
-
-    color: #888896;
-
-    margin-bottom: 5px;
-}
-
-
-.stat-card strong {
-    font-size: 20px;
-}
-
-
 .admin-section {
     background: #12121c;
 
