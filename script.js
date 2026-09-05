@@ -145,8 +145,22 @@ function registrarUsuario(event) {
         return;
     }
 
-    // El primer usuario que se registra queda como administrador
-    const rol = usuarios.length === 0 ? "admin" : "usuario";
+    // Por defecto, todo usuario que se registra queda como "usuario".
+    // El rol "admin" NUNCA se asigna automáticamente en el registro.
+    // La única excepción es la cuenta inicial de arranque del sistema:
+    // la primera vez que se registra alguien en todo el sistema (una sola
+    // vez en la vida del proyecto), esa cuenta queda como admin para que
+    // exista al menos un administrador que luego pueda ascender a otros
+    // usuarios desde el panel. Una vez usado, este "boleto" de arranque
+    // se marca como gastado en localStorage y no se vuelve a activar,
+    // aunque luego se borre esa cuenta admin o el array de usuarios.
+    const arranqueUsado = localStorage.getItem("adminArranqueUsado") === "true";
+
+    const rol = (!arranqueUsado) ? "admin" : "usuario";
+
+    if (rol === "admin") {
+        localStorage.setItem("adminArranqueUsado", "true");
+    }
 
     usuarios.push({ nombre, email, password, rol });
 
@@ -207,7 +221,11 @@ function verificarAdmin() {
 
         window.location.href = "index.html";
 
+        return false;
+
     }
+
+    return true;
 
 }
 
@@ -1374,7 +1392,7 @@ function inicializarAdmin() {
     if (!tablaProductos) return;
 
 
-    verificarAdmin();
+    if (!verificarAdmin()) return;
 
 
     cargarAdmin();
@@ -1424,6 +1442,9 @@ function actualizarMenuUsuario() {
     const usuarioMenu =
         document.getElementById("usuario-menu");
 
+    const adminPanelMenu =
+        document.getElementById("admin-panel-menu");
+
 
     if (!loginMenu || !logoutMenu) return;
 
@@ -1447,6 +1468,16 @@ function actualizarMenuUsuario() {
 
         }
 
+
+        // Mostrar el botón de panel de administrador SOLO si el
+        // rol real (validado desde localStorage) es "admin".
+        if (adminPanelMenu) {
+
+            adminPanelMenu.style.display =
+                usuario.rol === "admin" ? "inline-block" : "none";
+
+        }
+
     } else {
 
         // Mostrar iniciar sesión
@@ -1463,7 +1494,34 @@ function actualizarMenuUsuario() {
 
         }
 
+
+        // Sin sesión no hay rol posible: nunca se muestra el botón.
+        if (adminPanelMenu) {
+
+            adminPanelMenu.style.display = "none";
+
+        }
+
     }
+
+}
+
+
+function irAlPanelAdmin() {
+
+    // Doble verificación real de rol antes de navegar, además de la
+    // validación que ya hace verificarAdmin() dentro de admin.html.
+    const usuario = obtenerUsuarioActual();
+
+    if (!usuario || usuario.rol !== "admin") {
+
+        alert("No tienes permisos para acceder al panel de administrador.");
+
+        return;
+
+    }
+
+    window.location.href = "admin.html";
 
 }
 
