@@ -23,6 +23,8 @@ a {
     color: inherit;
 }
 
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
 /* =========================================
        Css de Index.html
 ========================================= */
@@ -31,6 +33,7 @@ a {
    HEADER
 ========================================= */
 
+/* Variables de color */
 :root {
     --ng: #07060d;
     --ng-alt: #0b0a14;
@@ -561,6 +564,110 @@ a {
     color: var(--db-purple2);
 }
 
+/* =========================================
+   PRODUCTOS
+========================================= */
+
+.product-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 23px;
+}
+
+.product-card {
+    background: #12121c;
+
+    border: 1px solid #292939;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-7px);
+
+    border-color: #a855f7;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+.product-card img {
+    width: 100%;
+
+    height: 200px;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.product-info {
+    padding: 20px;
+}
+
+.platform-tag {
+    display: inline-block;
+
+    color: #a855f7;
+
+    background: rgba(168, 85, 247, 0.1);
+
+    border-radius: 5px;
+
+    padding: 5px 8px;
+
+    font-size: 11px;
+
+    margin-bottom: 13px;
+}
+
+.product-info h3 {
+    font-size: 21px;
+
+    margin-bottom: 15px;
+}
+
+.price {
+    font-size: 24px;
+
+    color: #ffffff;
+
+    font-weight: bold;
+
+    margin-bottom: 18px;
+}
+
+.buy-button {
+    width: 100%;
+
+    padding: 12px;
+
+    background: #ccff33;
+
+    color: #0a0a12;
+
+    border: none;
+
+    border-radius: 6px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.buy-button:hover {
+    background: #b0e62e;
+}
+
 .store-button {
     text-align: center;
     margin-top: 40px;
@@ -770,47 +877,58 @@ footer p {
         Fin de Css de Index.html
 ========================================= */
 
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
 /* =========================================
-   TÍTULOS
+     Css de Catalogo.html
 ========================================= */
 
-.section-title {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: end;
-
-    margin-bottom: 35px;
+/* Variables de color */
+:root {
+    --ng: #07060d;
+    --ng-alt: #0b0a14;
+    --purple: #a855f7;
+    --purple2: #d946ef;
+    --lime: #ccff33;
+    --blue: #4f9eff;
+    --border: #23202f;
+    --muted: #9997a8;
+    --text-nav: #bbbbc7;
+    --red1: #ff4d6d;
+    --red2: #ff6b85;
 }
 
-.section-title p,
-.catalog-header p {
-    color: #a855f7;
+/* =========================================
+   CATÁLOGO
+========================================= */
 
-    font-size: 13px;
+.catalog-header {
+    padding-top: 20px;
 
-    letter-spacing: 3px;
+    text-align: center;
 
-    font-weight: bold;
-
-    margin-bottom: 8px;
+    margin-bottom: 45px;
 }
 
-.section-title h2 {
-    font-size: 34px;
+.catalog-header h1 {
+    font-size: 45px;
+
+    margin-bottom: 10px;
 }
 
-.view-all {
-    color: #a855f7;
+.catalog-header span {
+    color: #888896;
 }
-
 
 /* =========================================
    PRODUCTOS
 ========================================= */
+#catalogo-productos {
+    
+padding: 50px 25px ;
 
-.product-grid {
+}
+.product-grid  {
     display: grid;
 
     grid-template-columns:
@@ -916,6 +1034,8 @@ footer p {
 ========================================= */
 
 .catalog-header {
+    padding-top: 20px;
+
     text-align: center;
 
     margin-bottom: 45px;
@@ -1011,85 +1131,6 @@ footer p {
     border-color: #ccff33;
 }
 
-
-
-
-/* =========================================
-   RESPONSIVE
-========================================= */
-
-@media (max-width: 900px) {
-
-    .header {
-        padding: 15px 5%;
-
-        height: auto;
-
-        flex-wrap: wrap;
-
-        gap: 15px;
-    }
-
-    .menu {
-        order: 3;
-
-        width: 100%;
-
-        justify-content: center;
-
-        gap: 15px;
-    }
-
-    .hero h1 {
-        font-size: 45px;
-    }
-
-    .platform-grid,
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-
-@media (max-width: 600px) {
-
-    .platform-grid,
-    .product-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .hero {
-        min-height: 500px;
-
-        padding: 40px 6%;
-    }
-
-    .hero h1 {
-        font-size: 38px;
-    }
-
-    .catalog-header h1 {
-        font-size: 35px;
-    }
-
-    .section-title {
-        align-items: start;
-
-        flex-direction: column;
-
-        gap: 15px;
-    }
-
-    .platform-section,
-    .featured-section,
-    .catalog-page {
-        width: 90%;
-    }
-
-    .cart {
-        width: 100%;
-    }
-}
 
 /* =========================================
    AUTENTICACIÓN
@@ -1922,70 +1963,83 @@ td input {
     }
 }
 /*
-/* =========================================================
-   DREAMBOX - TIENDA 
-========================================================= */
 
-.store-section {
-    width: 90%;
-    max-width: 1400px;
-    margin: auto;
-    padding: 90px 0 40px;
-}
+-----------------------------------------------------------------------------------------------------------------------------------------------
 
-.store-header {
-    text-align: center;
-    margin-bottom: 45px;
-}
-
-.store-header p.store-title {
-    color: var(--db-lime);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    margin-bottom: 10px;
-}
-
-.store-header h2 {
-    font-size: 36px;
-    margin-bottom: 12px;
-}
-
-.store-header span {
-    color: var(--db-muted);
-}
-
-.platform-pills {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    margin-bottom: 45px;
-    flex-wrap: wrap;
-}
-
-.platform-pills a {
-    border: 1px solid var(--db-border);
-    background: #100e1a;
-    color: #d7d5e0;
-    padding: 10px 22px;
-    border-radius: 30px;
-    font-size: 13.5px;
-    font-weight: 600;
-    transition: 0.25s;
-}
-
-.platform-pills a:hover {
-    border-color: var(--db-purple);
-    color: var(--db-purple2);
-}
-
-.store-cta {
-    text-align: center;
-    margin-top: 40px;
-}
+/* =========================================
+   RESPONSIVE catalogo y home
+========================================= */
 /*
 @media (max-width: 900px) {
-    .db-hero {
+
+    .header {
+        padding: 15px 5%;
+
+        height: auto;
+
+        flex-wrap: wrap;
+
+        gap: 15px;
+    }
+
+    .menu {
+        order: 3;
+
+        width: 100%;
+
+        justify-content: center;
+
+        gap: 15px;
+    }
+
+    .hero h1 {
+        font-size: 45px;
+    }
+
+    .platform-grid,
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .platform-grid,
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        min-height: 500px;
+
+        padding: 40px 6%;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .catalog-header h1 {
+        font-size: 35px;
+    }
+
+    .platform-section,
+    .featured-section,
+    .catalog-page {
+        width: 90%;
+    }
+
+    .cart {
+        width: 100%;
+    }
+}
+/*
+
+
+/*
+@media (max-width: 900px) {
+    .hero {
         grid-template-columns: 1fr;
     }
 
@@ -1999,11 +2053,11 @@ td input {
         border-left: none;
     }
 
-    .db-nav {
+    .nav {
         display: none;
     }
 
-    .db-hero h1 {
+    .hero h1 {
         font-size: 38px;
     }
 */
