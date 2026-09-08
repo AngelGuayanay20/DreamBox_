@@ -154,6 +154,7 @@ function registrarUsuario(event) {
     // usuarios desde el panel. Una vez usado, este "boleto" de arranque
     // se marca como gastado en localStorage y no se vuelve a activar,
     // aunque luego se borre esa cuenta admin o el array de usuarios.
+
     const arranqueUsado = localStorage.getItem("adminArranqueUsado") === "true";
 
     const rol = (!arranqueUsado) ? "admin" : "usuario";
@@ -467,7 +468,7 @@ function cargarDetalle() {
 
     contenedor.innerHTML = `
 
-        <img src="${producto.imagen}" alt="${producto.nombre}">
+        <img id="detail-image" src="${producto.imagen}" alt="${producto.nombre}">
 
         <div class="detail-info">
 
