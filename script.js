@@ -145,16 +145,6 @@ function registrarUsuario(event) {
         return;
     }
 
-    // Por defecto, todo usuario que se registra queda como "usuario".
-    // El rol "admin" NUNCA se asigna automáticamente en el registro.
-    // La única excepción es la cuenta inicial de arranque del sistema:
-    // la primera vez que se registra alguien en todo el sistema (una sola
-    // vez en la vida del proyecto), esa cuenta queda como admin para que
-    // exista al menos un administrador que luego pueda ascender a otros
-    // usuarios desde el panel. Una vez usado, este "boleto" de arranque
-    // se marca como gastado en localStorage y no se vuelve a activar,
-    // aunque luego se borre esa cuenta admin o el array de usuarios.
-
     const arranqueUsado = localStorage.getItem("adminArranqueUsado") === "true";
 
     const rol = (!arranqueUsado) ? "admin" : "usuario";
@@ -1427,6 +1417,8 @@ document.addEventListener(
 
         actualizarMenuUsuario();
 
+        inicializarMenuMovil();
+
     }
 );
 
@@ -1504,6 +1496,70 @@ function actualizarMenuUsuario() {
         }
 
     }
+
+}
+
+/* =====================================================
+   MENÚ HAMBURGUESA (RESPONSIVE)
+===================================================== */
+
+function toggleMenu() {
+
+    const nav = document.getElementById("nav-menu");
+    const boton = document.getElementById("hamburger-btn");
+
+    if (!nav || !boton) return;
+
+    const abierto = nav.classList.toggle("active");
+
+    boton.classList.toggle("active", abierto);
+
+    boton.setAttribute("aria-expanded", abierto ? "true" : "false");
+
+}
+
+
+function cerrarMenu() {
+
+    const nav = document.getElementById("nav-menu");
+    const boton = document.getElementById("hamburger-btn");
+
+    if (!nav || !boton) return;
+
+    nav.classList.remove("active");
+
+    boton.classList.remove("active");
+
+    boton.setAttribute("aria-expanded", "false");
+
+}
+
+
+function inicializarMenuMovil() {
+
+    const nav = document.getElementById("nav-menu");
+
+    if (!nav) return;
+
+    // Cerrar el menú automáticamente al seleccionar cualquier enlace
+    nav.querySelectorAll("a").forEach(enlace => {
+
+        enlace.addEventListener("click", cerrarMenu);
+
+    });
+
+    // Si el usuario agranda la ventana hasta el tamaño de escritorio
+    // mientras el menú móvil está abierto, lo cerramos para que no
+    // quede abierto al volver a achicar la ventana.
+    window.addEventListener("resize", () => {
+
+        if (window.innerWidth >= 1024) {
+
+            cerrarMenu();
+
+        }
+
+    });
 
 }
 

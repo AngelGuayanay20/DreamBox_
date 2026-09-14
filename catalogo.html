@@ -25,7 +25,7 @@
 
         <div class="logo">
             <a href="index.html">
-                <p> DREAM<span>BOX</span></p>
+                <p>DREAM<span>BOX</span></p>
             </a>
         </div>
 
@@ -36,6 +36,20 @@
             <a href="catalogo.html">TIENDA</a>
             <a href="index.html#contacto">CONTACTO</a>
         </nav>
+
+         <button
+            class="hamburger-btn"
+            id="hamburger-btn"
+            onclick="toggleMenu()"
+            aria-label="Abrir menú"
+            aria-expanded="false"
+            aria-controls="nav-menu"
+        >
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+
 
         <div class="header-actions">
 
@@ -112,7 +126,8 @@
     <footer>
 
         <div class="footer-logo">
-            <span style="color:#fff;">DREAM</span><span style="background:linear-gradient(90deg,#a855f7,#d946ef); -webkit-background-clip:text; background-clip:text; color:transparent;">BOX</span>
+            <p class="footer-logo-text">DREAM<span>BOX</span></p>
+
         </div>
 
         <p>No juegas un videojuego... vives uno creado especialmente para ti.</p>
