@@ -1685,6 +1685,15 @@ td input {
 
 @media (max-width: 480px) {
 
+    .product-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+
     .admin-stats {
         grid-template-columns: 1fr;
     }
