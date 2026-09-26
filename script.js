@@ -1396,6 +1396,71 @@ function inicializarAdmin() {
 
 }
 
+/* =====================================================
+   VALIDACIÓN FORMULARIO DE CONTACTO
+===================================================== */
+
+function validarFormularioContacto(event) {
+
+    event.preventDefault();
+
+    const nombre = document.getElementById("contact-nombre").value.trim();
+    const email = document.getElementById("contact-email").value.trim();
+    const telefono = document.getElementById("contact-telefono").value.trim();
+    const mensaje = document.getElementById("contact-mensaje").value.trim();
+
+    const errorNombre = document.getElementById("error-nombre");
+    const errorEmail = document.getElementById("error-email");
+    const errorTelefono = document.getElementById("error-telefono");
+    const errorMensaje = document.getElementById("error-mensaje");
+    const exito = document.getElementById("contact-exito");
+
+    [errorNombre, errorEmail, errorTelefono, errorMensaje].forEach(
+        el => el.textContent = ""
+    );
+
+    exito.textContent = "";
+
+    let esValido = true;
+
+    if (nombre === "") {
+        errorNombre.textContent = "El nombre es obligatorio.";
+        esValido = false;
+    }
+
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (email === "") {
+        errorEmail.textContent = "El correo es obligatorio.";
+        esValido = false;
+    } else if (!regexEmail.test(email)) {
+        errorEmail.textContent = "Ingresa un correo válido.";
+        esValido = false;
+    }
+
+    const regexTelefono = /^[0-9+\s-]{7,15}$/;
+
+    if (telefono === "") {
+        errorTelefono.textContent = "El teléfono es obligatorio.";
+        esValido = false;
+    } else if (!regexTelefono.test(telefono)) {
+        errorTelefono.textContent = "Ingresa un teléfono válido.";
+        esValido = false;
+    }
+
+    if (mensaje === "") {
+        errorMensaje.textContent = "El mensaje es obligatorio.";
+        esValido = false;
+    }
+
+    if (!esValido) return;
+
+    exito.textContent =
+        "¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.";
+
+    event.target.reset();
+
+}
 
 /* =====================================================
    INICIO DEL SISTEMA

@@ -42,6 +42,7 @@ a {
     --purple3: #7c3aed;
     --lime: #ccff33;
     --lime2:#65e38a;
+    --lime3:#25d366;
     --blue: #4f9eff;
     --border: #23202f;
     --muted: #9997a8;
@@ -342,6 +343,7 @@ a {
     border: none;
     cursor: pointer;
     transition: 0.25s;
+    justify-content: center;
 }
 
 .button-xp:hover {
@@ -726,6 +728,247 @@ a {
     text-align: center;
     margin-top: 40px;
 }
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/* =========================================
+     Css de Contacto
+========================================= */
+
+.contact-section {
+    width: 90%;
+    max-width: 1400px;
+    margin: auto;
+    padding: 90px 0 100px;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr ,1.3fr;
+    gap: 40px;
+}
+
+/* ----- Info de contacto ----- */
+
+.contact-info {
+    background: #100e1a;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background-color:#0d0d15;
+    border: 1px solid var(--border);
+    border-radius:20px;
+    padding: 18px 20px;
+}
+
+.contact-item a {
+ color: #e9edf4;
+}
+
+.contact-item a:hover {
+  color: #4fd1c5;
+}
+
+.contact-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+#UBI {
+
+  color: var(--red1);
+  border: 1px solid var(--red1);
+  background-color: #303044;
+
+}
+
+#TEL {
+    color: var(--lime);
+    border: 1px solid #ccff3373;
+    background-color: #303044;
+}
+
+#EMAIL {
+    color: var(--blue);
+    border: 1px solid #4f9eff73;
+    background-color: #303044;
+}
+
+.contact-label {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+
+.social-block p {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12.5px;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+}
+
+.social-icons {
+   justify-content: center;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.social-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--ng-alt);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 19px;
+
+    transition: 0.25s;
+}
+
+#IG:hover{
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888,#a855f7);
+    color: #ffffff;
+    border-color: #dc2743;
+    box-shadow: 0 8px 20px #dc274359;
+}
+
+#FACE:hover{
+    color: #ffffff;
+    border-color: #1877f2;
+    background: #1877f2;
+    box-shadow: 0 8px 20px #1877f259;
+}
+
+#TIKTOK:hover{
+    color: #ffffff;
+    border-color: #000000;
+    background:#000000 ;
+    box-shadow:
+        -4px 0 12px -2px #fe2c55,
+        4px 0 12px -2px #25f4ee;
+   
+}
+
+#WAPP:hover{
+    color: #ffffff;
+    border-color: var(--lime3);
+    background: var(--lime3);
+    box-shadow: 0 8px 20px #25d36659;
+
+}
+/* ----- Formulario ----- */
+
+.contact-form {
+    background: #100e1a;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group label {
+    color: #ccccd5;
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    background: #0d0d15;
+    color: white;
+    border: 1px solid #303044;
+    padding: 13px;
+    border-radius: 8px;
+    outline: none;
+    font-family: inherit;
+    transition: 0.25s;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px #a855f71a;
+}
+
+.form-error {
+    color: var(--red2);
+    font-size: 12.5px;
+    min-height: 15px;
+}
+
+.form-success {
+    color: var(--lime);
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* ----- Responsive ----- */
+
+@media (max-width: 900px) {
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .contact-info,
+    .contact-form {
+        padding: 22px;
+    }
+
+    .social-icons {
+        justify-content: flex-start;
+    }
+
+}
+
+/* =========================================
+        Fin de Css de Contacto
+========================================= */
 
 /* =========================================
    FOOTER
