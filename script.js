@@ -475,18 +475,16 @@ function cargarDetalle() {
             <p class="price">$${Number(producto.precio).toFixed(2)}</p>
 
             <p class="product-stock">
-                ${
-                    producto.stock > 0
-                        ? "📦 Stock: " + producto.stock
-                        : "❌ Agotado"
-                }
+                ${producto.stock > 0
+            ? "📦 Stock: " + producto.stock
+            : "❌ Agotado"
+        }
             </p>
 
-            ${
-                producto.stock > 0
-                    ? `<button class="buy-button" onclick="agregarCarrito(${producto.id})">🛒 Agregar al carrito</button>`
-                    : `<button class="buy-button disabled" disabled>Agotado</button>`
-            }
+            ${producto.stock > 0
+            ? `<button class="buy-button" onclick="agregarCarrito(${producto.id})">🛒 Agregar al carrito</button>`
+            : `<button class="buy-button disabled" disabled>Agotado</button>`
+        }
 
         </div>
 
@@ -506,24 +504,44 @@ function abrirDetalle(id) {
    GAMEZONE - FILTROS DEL CATÁLOGO
 ===================================================== */
 
-function filtrarProductos() {
+let plataformaActual = "Todos";
 
-    const texto =
-        document.getElementById("buscador").value.toLowerCase();
+
+function aplicarFiltros() {
+
+    const buscador = document.getElementById("buscador");
+
+    const texto = buscador
+        ? buscador.value.toLowerCase().trim()
+        : "";
 
     document.querySelectorAll(".catalog-product").forEach(card => {
 
-        const nombre = card.dataset.nombre.toLowerCase();
+        const coincideNombre =
+            card.dataset.nombre.toLowerCase().includes(texto);
+
+        const coincidePlataforma =
+            plataformaActual === "Todos" ||
+            card.dataset.plataforma.split(" ").includes(plataformaActual);
 
         card.style.display =
-            nombre.includes(texto) ? "" : "none";
+            (coincideNombre && coincidePlataforma) ? "" : "none";
 
     });
 
 }
 
 
+function filtrarProductos() {
+
+    aplicarFiltros();
+
+}
+
+
 function filtrarPlataforma(plataforma, boton) {
+
+    plataformaActual = plataforma;
 
     document.querySelectorAll(".filter").forEach(
         btn => btn.classList.remove("active")
@@ -531,14 +549,7 @@ function filtrarPlataforma(plataforma, boton) {
 
     if (boton) boton.classList.add("active");
 
-    document.querySelectorAll(".catalog-product").forEach(card => {
-
-        card.style.display =
-            (plataforma === "Todos" || card.dataset.plataforma.includes(plataforma))
-                ? ""
-                : "none";
-
-    });
+    aplicarFiltros();
 
 }
 
@@ -1004,7 +1015,7 @@ function cargarVentasAdmin() {
             <tr>
 
                 <td
-                    colspan="5"
+                    colspan="6"
                     class="empty-table"
                 >
                     No existen ventas todavía.
@@ -1276,11 +1287,10 @@ function cargarCatalogo() {
 
                     <p class="product-stock">
 
-                        ${
-                            agotado
-                                ? "❌ Agotado"
-                                : "📦 Stock: " + producto.stock
-                        }
+                        ${agotado
+                ? "❌ Agotado"
+                : "📦 Stock: " + producto.stock
+            }
 
                     </p>
 
@@ -1288,8 +1298,8 @@ function cargarCatalogo() {
                     <p class="price">
 
                         $${Number(
-                            producto.precio
-                        ).toFixed(2)}
+                producto.precio
+            ).toFixed(2)}
 
                     </p>
 
@@ -1309,10 +1319,9 @@ function cargarCatalogo() {
                         </button>
 
 
-                        ${
-                            agotado
+                        ${agotado
 
-                                ? `
+                ? `
 
                                     <button
                                         class="buy-button disabled"
@@ -1323,7 +1332,7 @@ function cargarCatalogo() {
 
                                   `
 
-                                : `
+                : `
 
                                     <button
                                         class="buy-button"
@@ -1338,7 +1347,7 @@ function cargarCatalogo() {
                                     </button>
 
                                   `
-                        }
+            }
 
                     </div>
 
@@ -1363,6 +1372,8 @@ function cargarCatalogo() {
 
         filtrarPlataforma(plataformaURL, boton);
 
+    }  else {
+        aplicarFiltros();
     }
 
 }

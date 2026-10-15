@@ -41,8 +41,8 @@ a {
     --purple2: #d946ef;
     --purple3: #7c3aed;
     --lime: #ccff33;
-    --lime2:#65e38a;
-    --lime3:#25d366;
+    --lime2: #65e38a;
+    --lime3: #25d366;
     --blue: #4f9eff;
     --border: #23202f;
     --muted: #9997a8;
@@ -58,7 +58,7 @@ a {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content:space-around;
+    justify-content: space-around;
     gap: 10px;
     row-gap: 12px;
 
@@ -78,10 +78,10 @@ a {
     letter-spacing: 1px;
 }
 
-.logo span  {
-   background: linear-gradient(90deg, var(--purple), var(--purple2));
-   background-clip: text;
-   color: transparent;
+.logo span {
+    background: linear-gradient(90deg, var(--purple), var(--purple2));
+    background-clip: text;
+    color: transparent;
 }
 
 .nav {
@@ -198,8 +198,8 @@ a {
 }
 
 .cart-button:hover {
-   border: 1px solid var(--purple);
-   transform: translateY(-2px);
+    border: 1px solid var(--purple);
+    transform: translateY(-2px);
 }
 
 #contador-carrito {
@@ -223,8 +223,8 @@ a {
 }
 
 .user-icon {
-    background:var(--ng-alt);
-    color:var(--text-nav);
+    background: var(--ng-alt);
+    color: var(--text-nav);
     border: 1px solid var(--border);
     border-radius: 15px;
     padding: 10px 15px;
@@ -297,12 +297,12 @@ a {
 }
 
 .hero h1 {
-    font-size: clamp(30px ,5vw+ 12px, 60px);
+    font-size: clamp(30px, 5vw+ 12px, 60px);
     line-height: 1.15;
     margin-bottom: 25px;
 }
 
-.hero h1 .grad-purple { 
+.hero h1 .grad-purple {
     background: linear-gradient(90deg, var(--purple), var(--purple2));
     background-clip: text;
     color: transparent;
@@ -330,11 +330,11 @@ a {
     flex-wrap: wrap;
 }
 
-.button-xp{
+.button-xp {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(90deg,var(--purple3), var(--purple));
+    background: linear-gradient(90deg, var(--purple3), var(--purple));
     color: #fff;
     padding: 15px 26px;
     border-radius: 10px;
@@ -589,7 +589,7 @@ a {
 }
 
 .store-header h2 {
-    font-size: clamp(24px,4vw + 12px,36px);
+    font-size: clamp(24px, 4vw + 12px, 36px);
     margin-bottom: 12px;
 }
 
@@ -649,7 +649,7 @@ a {
 .product-card:hover {
     transform: translateY(-7px);
 
-    border-color:var(--purple);
+    border-color: var(--purple);
 
     box-shadow: 0 15px 40px #00000059;
 }
@@ -671,7 +671,7 @@ a {
 .platform-tag {
     display: inline-block;
 
-    color:var(--purple);
+    color: var(--purple);
 
     background: #a855f71a;
 
@@ -764,40 +764,40 @@ a {
     display: flex;
     align-items: center;
     gap: 16px;
-    background-color:#0d0d15;
+    background-color: #0d0d15;
     border: 1px solid var(--border);
-    border-radius:20px;
+    border-radius: 20px;
     padding: 18px 40px;
 }
 
 .contact-item a {
- color: #e9edf4;
+    color: #e9edf4;
 }
 
 .contact-item a:hover {
-  color: #4fd1c5;
+    color: #4fd1c5;
 }
 
 .contact-icon {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .contact-icon svg {
-  width: 20px;
-  height: 20px;
+    width: 20px;
+    height: 20px;
 }
 
 #UBI {
 
-  color: var(--red1);
-  border: 1px solid var(--red1);
-  background-color: #303044;
+    color: var(--red1);
+    border: 1px solid var(--red1);
+    background-color: #303044;
 
 }
 
@@ -814,10 +814,10 @@ a {
 }
 
 .contact-label {
-  display: block;
-  font-size: 0.72rem;
-  color: var(--muted);
-  margin-bottom: 2px;
+    display: block;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 2px;
 }
 
 .social-block p {
@@ -829,7 +829,7 @@ a {
 }
 
 .social-icons {
-   justify-content: center;
+    justify-content: center;
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
@@ -850,37 +850,38 @@ a {
     transition: 0.25s;
 }
 
-#IG:hover{
-    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888,#a855f7);
+#IG:hover {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888, #a855f7);
     color: #ffffff;
     border-color: #dc2743;
     box-shadow: 0 8px 20px #dc274359;
 }
 
-#FACE:hover{
+#FACE:hover {
     color: #ffffff;
     border-color: #1877f2;
     background: #1877f2;
     box-shadow: 0 8px 20px #1877f259;
 }
 
-#TIKTOK:hover{
+#TIKTOK:hover {
     color: #ffffff;
     border-color: #000000;
-    background:#000000 ;
+    background: #000000;
     box-shadow:
         -4px 0 12px -2px #fe2c55,
         4px 0 12px -2px #25f4ee;
-   
+
 }
 
-#WAPP:hover{
+#WAPP:hover {
     color: #ffffff;
     border-color: var(--lime3);
     background: var(--lime3);
     box-shadow: 0 8px 20px #25d36659;
 
 }
+
 /* ----- Formulario ----- */
 
 .contact-form {
@@ -968,13 +969,14 @@ footer {
     color: #fff;
 
 }
-.footer-logo span  {
 
-   background: linear-gradient(90deg, var(--purple), var(--purple2));
-   background-clip: text;
-   color: transparent;
+.footer-logo span {
 
-} 
+    background: linear-gradient(90deg, var(--purple), var(--purple2));
+    background-clip: text;
+    color: transparent;
+
+}
 
 footer p {
 
@@ -1250,7 +1252,7 @@ footer p {
 .search-container input:focus {
     border-color: var(--purple);
 
-    box-shadow:0 0 0 3px #a855f71a;
+    box-shadow: 0 0 0 3px #a855f71a;
 }
 
 /* =========================================
@@ -1291,7 +1293,7 @@ footer p {
 
     color: #0a0a12;
 
-    border-color:var(--lime);
+    border-color: var(--lime);
 }
 
 
@@ -1300,7 +1302,7 @@ footer p {
 ========================================= */
 #catalogo-productos-container {
 
-padding: 50px 25px ;
+    padding: 50px 25px;
 
 }
 
@@ -1327,7 +1329,7 @@ padding: 50px 25px ;
 
     align-items: center;
 
-    background:radial-gradient(circle at top,#18202d, #08080e 65%);
+    background: radial-gradient(circle at top, #18202d, #08080e 65%);
 }
 
 
@@ -1356,7 +1358,7 @@ padding: 50px 25px ;
 
     font-weight: bold;
 
-    color:var(--purple);
+    color: var(--purple);
 
     margin-bottom: 25px;
 }
@@ -1442,9 +1444,9 @@ padding: 50px 25px ;
     cursor: pointer;
 }
 
-.auth-link  {
-    text-align:center; 
-    margin-top:18px;
+.auth-link {
+    text-align: center;
+    margin-top: 18px;
 }
 
 .auth-link a {
@@ -1630,7 +1632,7 @@ padding: 50px 25px ;
 }
 
 
-.admin-header > div:last-child {
+.admin-header>div:last-child {
     display: flex;
     flex-wrap: wrap;
 
@@ -1640,7 +1642,7 @@ padding: 50px 25px ;
 }
 
 
-.logout-button {
+.logout-button1 {
     border: none;
 
     background: #292939;
@@ -1681,7 +1683,7 @@ padding: 50px 25px ;
 
 
 .admin-title h1 {
-    font-size:clamp(26px, 4vw + 14px, 40px);
+    font-size: clamp(26px, 4vw + 14px, 40px);
 }
 
 
@@ -1720,7 +1722,7 @@ padding: 50px 25px ;
 .admin-form {
     display: grid;
 
-    grid-template-columns:repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 
     gap: 15px;
 }
@@ -1771,7 +1773,7 @@ padding: 50px 25px ;
 
 
 .stock-input:focus {
-    border-color:  var(--lime);
+    border-color: var(--lime);
 }
 
 
@@ -1881,7 +1883,13 @@ td input {
     cursor: pointer;
 }
 
-/*-------------------------------------------------------------------------------------------------------------------------------------------------------------------/*
+.empty-table {
+    text-align: center;
+    color: #777784;
+    padding: 30px 14px;
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 /* =========================================
     Diseños Responsives 
@@ -1937,7 +1945,7 @@ td input {
         padding: 22px;
     }
 
-   
+
 
     .social-icons {
         justify-content: center;
@@ -1984,7 +1992,7 @@ td input {
         padding-top: 0;
     }
 
-     .contact-item{
+    .contact-item {
         justify-content: center;
 
     }
@@ -2005,14 +2013,6 @@ td input {
 
 @media (max-width: 767px) {
 
-    #reservar-header-btn {
-        display: none;
-    }
-
-}
-
-@media (max-width: 767px) {
-
     .hero-side {
         flex-direction: column;
     }
@@ -2024,7 +2024,7 @@ td input {
         grid-template-columns: repeat(2, 1fr);
     }
 
-} 
+}
 
 /* =========================================
     Diseños Responsives 780 - 1024
@@ -2138,11 +2138,12 @@ td input {
     }
 
 }
+
 @media (max-width: 1024px) {
 
     .contact-grid {
         grid-template-columns: 1fr;
     }
-    
+
 
 }

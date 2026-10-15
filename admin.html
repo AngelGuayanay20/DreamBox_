@@ -5,16 +5,13 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>DreamBox | Administrador</title>
-    
+
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="assets/dreambox-cabin-34x29.jpg" type="image/jpg">
-    
+
 
 
 </head>
@@ -26,9 +23,9 @@
     <header class="admin-header">
 
         <div class="logo">
-             <a href="index.html">
-                <p>DREAM<span>BOX</span>
-             </a>
+            <a href="index.html">
+                <p>DREAM<span>BOX</span></p>
+            </a>
         </div>
 
         <div>
@@ -37,10 +34,7 @@
                 👑 Administrador
             </span>
 
-            <button
-                class="logout-button"
-                onclick="cerrarSesion()"
-            >
+            <button class="logout-button1" onclick="cerrarSesion()">
                 Cerrar sesión
             </button>
 
@@ -69,101 +63,101 @@
 
         <div class="admin-stats">
 
-    <div class="stat-card">
+            <div class="stat-card">
 
-        <span>🎮</span>
+                <span>🎮</span>
 
-        <div>
+                <div>
 
-            <small>
-                Videojuegos
-            </small>
+                    <small>
+                        Videojuegos
+                    </small>
 
-            <strong id="total-productos-admin">
-                0
-            </strong>
+                    <strong id="total-productos-admin">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>👥</span>
+
+                <div>
+
+                    <small>
+                        Usuarios
+                    </small>
+
+                    <strong id="total-usuarios-admin">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>🛒</span>
+
+                <div>
+
+                    <small>
+                        Ventas
+                    </small>
+
+                    <strong id="total-ventas-admin">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>📦</span>
+
+                <div>
+
+                    <small>
+                        Stock total
+                    </small>
+
+                    <strong id="stock-total-admin">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span>💰</span>
+
+                <div>
+
+                    <small>
+                        Dinero vendido
+                    </small>
+
+                    <strong id="dinero-ventas-admin">
+                        $0.00
+                    </strong>
+
+                </div>
+
+            </div>
 
         </div>
-
-    </div>
-
-
-    <div class="stat-card">
-
-        <span>👥</span>
-
-        <div>
-
-            <small>
-                Usuarios
-            </small>
-
-            <strong id="total-usuarios-admin">
-                0
-            </strong>
-
-        </div>
-
-    </div>
-
-
-    <div class="stat-card">
-
-        <span>🛒</span>
-
-        <div>
-
-            <small>
-                Ventas
-            </small>
-
-            <strong id="total-ventas-admin">
-                0
-            </strong>
-
-        </div>
-
-    </div>
-
-
-    <div class="stat-card">
-
-        <span>📦</span>
-
-        <div>
-
-            <small>
-                Stock total
-            </small>
-
-            <strong id="stock-total-admin">
-                0
-            </strong>
-
-        </div>
-
-    </div>
-
-
-    <div class="stat-card">
-
-        <span>💰</span>
-
-        <div>
-
-            <small>
-                Dinero vendido
-            </small>
-
-            <strong id="dinero-ventas-admin">
-                $0.00
-            </strong>
-
-        </div>
-
-    </div>
-
-</div>
 
         <!-- AGREGAR PRODUCTO -->
 
@@ -174,73 +168,30 @@
             </h2>
 
 
-            <form
-                class="admin-form"
-                onsubmit="agregarProductoAdmin(event)"
-            >
+            <form class="admin-form" onsubmit="agregarProductoAdmin(event)">
 
-                <input
-                    id="admin-nombre"
-                    type="text"
-                    placeholder="Nombre del videojuego"
-                    required
-                >
+                <input id="admin-nombre" type="text" placeholder="Nombre del videojuego" required>
 
 
-                <input
-                    id="admin-precio"
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    placeholder="Precio"
-                    required
-                >
+                <input id="admin-precio" type="number" step="0.01" min="0" placeholder="Precio" required>
 
 
-                <input
-                    id="admin-stock"
-                    type="number"
-                    min="0"
-                    placeholder="Stock"
-                    required
-                >
+                <input id="admin-stock" type="number" min="0" placeholder="Stock" required>
 
 
-                <input
-                    id="admin-plataforma"
-                    type="text"
-                    placeholder="PC, PlayStation, Xbox, Nintendo"
-                    required
-                >
+                <input id="admin-plataforma" type="text" placeholder="PC, PlayStation, Xbox, Nintendo" required>
 
 
-                <input
-                    id="admin-genero"
-                    type="text"
-                    placeholder="Género"
-                    required
-                >
+                <input id="admin-genero" type="text" placeholder="Género" required>
 
 
-                <input
-                    id="admin-imagen"
-                    type="url"
-                    placeholder="URL de la imagen"
-                    required
-                >
+                <input id="admin-imagen" type="url" placeholder="URL de la imagen" required>
 
 
-                <textarea
-                    id="admin-descripcion"
-                    placeholder="Descripción del videojuego"
-                    required
-                ></textarea>
+                <textarea id="admin-descripcion" placeholder="Descripción del videojuego" required></textarea>
 
 
-                <button
-                    type="submit"
-                    class="admin-add-button"
-                >
+                <button type="submit" class="admin-add-button">
                     Agregar videojuego
                 </button>
 
@@ -283,96 +234,71 @@
                     </thead>
 
 
-                    <tbody
-                        id="tabla-productos"
-                    >
+                    <tbody id="tabla-productos">
+                    </tbody>
+
+                </table>
+
+            </div>
+        </section>
+
+        <section class="admin-section">
+
+            <div class="section-header-row">
+
+                <h2>👥 Usuarios registrados</h2>
+
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-usuarios">
+                    </tbody>
+                </table>
+
+            </div>
+
+        </section>
+
+        <section class="admin-section">
+
+            <h2>
+                🛒 Ventas realizadas
+            </h2>
+
+
+            <div class="table-container">
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Correo</th>
+                            <th>Productos</th>
+                            <th>Total</th>
+                            <th>Fecha</th>
+                        </tr>
+                        
+                    </thead>
+
+                    <tbody id="tabla-ventas">
+
                     </tbody>
 
                 </table>
 
             </div>
 
-            <section class="admin-section">
-
-             <div class="section-header-row">
-
-                <h2>👥 Usuarios registrados</h2>
-
-             </div>
-
-              <div class="table-container">
-                  <table>
-                        <thead>
-                           <tr>
-                              <th>Nombre</th>
-                              <th>Correo</th>
-                              <th>Rol</th>
-                            </tr>
-                      </thead>
-                      <tbody id="tabla-usuarios">
-                      </tbody>
-                    </table>
-
-                </div>
-
-            </section>
-
-            <section class="admin-section">
-
-             <h2>
-                🛒 Ventas realizadas
-             </h2>
-
-
-               <div class="table-container">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>
-                        ID
-                    </th>
-
-                    <th>
-                        Cliente
-                    </th>
-
-                    <th>
-                        Correo
-                    </th>
-
-                    <th>
-                        Productos
-                    </th>
-
-                    <th>
-                        Total
-                    </th>
-
-                    <th>
-                        Fecha
-                    </th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody id="tabla-ventas">
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-</section>
-
         </section>
-
     </main>
 
 
