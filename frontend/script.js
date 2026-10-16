@@ -1,4 +1,6 @@
 
+const API_URL = "http://localhost:3001";
+
 /* =====================================================
    GAMEZONE - PRODUCTOS (CATÁLOGO)
 ===================================================== */
@@ -1372,7 +1374,7 @@ function cargarCatalogo() {
 
         filtrarPlataforma(plataformaURL, boton);
 
-    }  else {
+    } else {
         aplicarFiltros();
     }
 
@@ -1404,6 +1406,8 @@ function inicializarAdmin() {
     cargarVentasAdmin();
 
     cargarEstadisticasAdmin();
+    
+    cargarMensajesAdmin();
 
 }
 
@@ -1411,7 +1415,7 @@ function inicializarAdmin() {
    VALIDACIÓN FORMULARIO DE CONTACTO
 ===================================================== */
 
-function validarFormularioContacto(event) {
+async function validarFormularioContacto(event) {
 
     event.preventDefault();
 
@@ -1465,13 +1469,39 @@ function validarFormularioContacto(event) {
     }
 
     if (!esValido) return;
+    const formulario = event.target;
+    const boton = formulario.querySelector("button[type='submit']");
 
-    exito.textContent =
-        "¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.";
+    boton.disabled = true;
 
-    event.target.reset();
+    try {
+
+        const respuesta = await fetch(API_URL + "/api/contacto", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nombre, email, telefono, mensaje })
+        });
+
+        if (!respuesta.ok) throw new Error("Respuesta no válida");
+
+        exito.textContent =
+            "¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.";
+
+        formulario.reset();
+
+    } catch (error) {
+
+        errorMensaje.textContent =
+            "No se pudo enviar el mensaje. Inténtalo de nuevo más tarde.";
+
+    } finally {
+
+        boton.disabled = false;
+
+    }
 
 }
+
 
 /* =====================================================
    INICIO DEL SISTEMA
@@ -1683,5 +1713,69 @@ function cerrarSesion() {
 
     window.location.href =
         "index.html";
+
+}
+
+function escaparHTML(texto) {
+    const div = document.createElement("div");
+    div.textContent = texto;
+    return div.innerHTML;
+}
+
+async function cargarMensajesAdmin() {
+
+    const tabla = document.getElementById("tabla-mensajes");
+
+    if (!tabla) return;
+
+    let clave = sessionStorage.getItem("adminKey");
+
+    if (!clave) {
+        clave = prompt("Clave de administrador para ver los mensajes:");
+    }
+
+    if (!clave) {
+        tabla.innerHTML = `<tr><td colspan="5" class="empty-table">Ingresa la clave para ver los mensajes.</td></tr>`;
+        return;
+    }
+
+    try {
+
+        const respuesta = await fetch(API_URL + "/api/contacto", {
+            headers: { "x-admin-key": clave }
+        });
+
+        if (respuesta.status === 401) {
+            sessionStorage.removeItem("adminKey");
+            tabla.innerHTML = `<tr><td colspan="5" class="empty-table">Clave incorrecta. Recarga la página para intentarlo de nuevo.</td></tr>`;
+            return;
+        }
+
+        if (!respuesta.ok) throw new Error("Respuesta no válida");
+
+        sessionStorage.setItem("adminKey", clave);
+
+        const mensajes = await respuesta.json();
+
+        if (mensajes.length === 0) {
+            tabla.innerHTML = `<tr><td colspan="5" class="empty-table">Todavía no hay mensajes.</td></tr>`;
+            return;
+        }
+
+        tabla.innerHTML = mensajes.map(m => `
+            <tr>
+                <td>${new Date(m.createdAt).toLocaleString()}</td>
+                <td>${escaparHTML(m.nombre)}</td>
+                <td>${escaparHTML(m.email)}</td>
+                <td>${escaparHTML(m.telefono)}</td>
+                <td>${escaparHTML(m.mensaje)}</td>
+            </tr>
+        `).join("");
+
+    } catch (error) {
+
+        tabla.innerHTML = `<tr><td colspan="5" class="empty-table">No se pudo conectar con el servidor.</td></tr>`;
+
+    }
 
 }
