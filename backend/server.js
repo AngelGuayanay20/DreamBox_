@@ -66,6 +66,79 @@ app.get("/api/contacto", soloAdmin, async (req, res) => {
     }
 });
 
+/* ---------- Chatbot recomendador (Groq) ---------- */
+const ultimoUso = new Map(); // límite simple: 1 mensaje cada 2 segundos por IP
+
+app.post("/api/chat", async (req, res) => {
+    try {
+        const ahora = Date.now();
+        if (ahora - (ultimoUso.get(req.ip) || 0) < 2000) {
+            return res.status(429).json({ error: "Espera un momento." });
+        }
+        ultimoUso.set(req.ip, ahora);
+
+        const { historial, catalogo } = req.body;
+
+        const mensajes = (Array.isArray(historial) ? historial : [])
+            .slice(-10)
+            .filter(m => (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
+            .map(m => ({ role: m.role, content: m.content.slice(0, 500) }));
+
+        if (mensajes.length === 0 || mensajes[mensajes.length - 1].role !== "user") {
+            return res.status(400).json({ error: "Mensaje inválido." });
+        }
+
+        const juegos = (Array.isArray(catalogo) ? catalogo : [])
+            .slice(0, 40)
+            .map(p => ({
+                nombre: String(p.nombre).slice(0, 80),
+                precio: Number(p.precio),
+                plataforma: [].concat(p.plataforma).join(", "),
+                genero: String(p.genero).slice(0, 40),
+                descripcion: String(p.descripcion).slice(0, 200),
+                stock: Number(p.stock)
+            }));
+
+        const system =
+            "Eres DreamBot, el asistente de la tienda DreamBox (cabina portátil con IA). " +
+            "Recomiendas videojuegos SOLO de este catálogo y nunca inventas títulos ni precios. " +
+            "Si un juego tiene stock 0, dilo. Si nada encaja, sugiere lo más cercano. " +
+            "Responde en español, en máximo 4 frases, con tono amable. " +
+            "Si preguntan algo ajeno a la tienda, redirige con amabilidad a los juegos.\n\n" +
+            "CATÁLOGO:\n" + JSON.stringify(juegos);
+
+        const respuesta = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + process.env.AI_API_KEY
+            },
+            body: JSON.stringify({
+                model: process.env.AI_MODEL,
+                max_tokens: 400,
+                messages: [
+                    { role: "system", content: system },
+                    ...mensajes
+                ]
+            })
+        });
+
+        if (!respuesta.ok) {
+            console.error(await respuesta.text());
+            return res.status(502).json({ error: "El asistente no está disponible." });
+        }
+
+        const data = await respuesta.json();
+        const texto = data.choices?.[0]?.message?.content || "";
+
+        res.json({ respuesta: texto });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error del servidor." });
+    }
+});
+
 /* ---------- Arranque ---------- */
 mongoose
     .connect(process.env.MONGODB_URI)

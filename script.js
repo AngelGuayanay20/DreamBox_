@@ -1525,6 +1525,8 @@ document.addEventListener(
 
         inicializarMenuMovil();
 
+        inicializarChatbot();
+        
     }
 );
 
@@ -1777,5 +1779,98 @@ async function cargarMensajesAdmin() {
         tabla.innerHTML = `<tr><td colspan="5" class="empty-table">No se pudo conectar con el servidor.</td></tr>`;
 
     }
+
+}
+
+/* =====================================================
+   CHATBOT RECOMENDADOR (DREAMBOT)
+===================================================== */
+
+let chatHistorial = [];
+
+function inicializarChatbot() {
+
+    if (document.getElementById("chatbot")) return;
+
+    const caja = document.createElement("div");
+    caja.id = "chatbot";
+    caja.innerHTML = `
+        <button class="chat-toggle" id="chat-toggle" aria-label="Abrir asistente">🤖</button>
+        <div class="chat-panel" id="chat-panel" hidden>
+            <div class="chat-header">
+                <strong>DreamBot</strong>
+                <button id="chat-cerrar" aria-label="Cerrar">✕</button>
+            </div>
+            <div class="chat-mensajes" id="chat-mensajes"></div>
+            <form class="chat-form" id="chat-form">
+                <input id="chat-input" type="text" maxlength="300" autocomplete="off"
+                       placeholder="¿Qué te gusta jugar?" required>
+                <button type="submit">➤</button>
+            </form>
+        </div>
+    `;
+    document.body.appendChild(caja);
+
+    const panel = document.getElementById("chat-panel");
+    const mensajes = document.getElementById("chat-mensajes");
+    const input = document.getElementById("chat-input");
+
+    function agregar(texto, quien) {
+        const div = document.createElement("div");
+        div.className = "chat-msg " + quien;
+        div.textContent = texto;          // textContent evita inyección de HTML
+        mensajes.appendChild(div);
+        mensajes.scrollTop = mensajes.scrollHeight;
+        return div;
+    }
+
+    agregar("¡Hola! Soy DreamBot 🎮 Cuéntame qué te gusta jugar y te recomiendo un título.", "bot");
+
+    document.getElementById("chat-toggle").onclick = () => {
+        panel.hidden = !panel.hidden;
+        if (!panel.hidden) input.focus();
+    };
+
+    document.getElementById("chat-cerrar").onclick = () => { panel.hidden = true; };
+
+    document.getElementById("chat-form").onsubmit = async (event) => {
+
+        event.preventDefault();
+
+        const texto = input.value.trim();
+        if (!texto) return;
+
+        input.value = "";
+        agregar(texto, "user");
+        chatHistorial.push({ role: "user", content: texto });
+
+        const espera = agregar("Escribiendo…", "bot");
+
+        try {
+
+            const respuesta = await fetch(API_URL + "/api/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    historial: chatHistorial,
+                    catalogo: obtenerProductos()
+                })
+            });
+
+            if (!respuesta.ok) throw new Error("Respuesta no válida");
+
+            const data = await respuesta.json();
+
+            espera.textContent = data.respuesta || "No pude responder, intenta de nuevo.";
+            chatHistorial.push({ role: "assistant", content: espera.textContent });
+
+        } catch (error) {
+
+            espera.textContent = "Ahora mismo no puedo responder. Inténtalo más tarde.";
+            chatHistorial.pop();   // quita el mensaje que falló
+
+        }
+
+    };
 
 }
