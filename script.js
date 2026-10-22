@@ -1536,73 +1536,49 @@ function actualizarMenuUsuario() {
 
     const usuario = obtenerUsuarioActual();
 
-    const loginMenu =
-        document.getElementById("login-menu");
+    const loginContainer = document.getElementById("login-container"); // Ahora es un <a>
+    const logoutMenu = document.getElementById("logout-menu");
+    const usuarioMenu = document.getElementById("usuario-menu");
+    const adminPanelMenu = document.getElementById("admin-panel-menu");
 
-    const logoutMenu =
-        document.getElementById("logout-menu");
-
-    const usuarioMenu =
-        document.getElementById("usuario-menu");
-
-    const adminPanelMenu =
-        document.getElementById("admin-panel-menu");
-
-
-    if (!loginMenu || !logoutMenu) return;
-
+    if (!logoutMenu) return;
 
     if (usuario) {
 
-        // Ocultar iniciar sesión
-        loginMenu.style.display = "none";
-
+        // Ocultar por completo el botón/enlace de login cuando hay sesión activa
+        if (loginContainer) loginContainer.style.display = "none";
 
         // Mostrar cerrar sesión
         logoutMenu.style.display = "inline-block";
 
-
         // Mostrar nombre
         if (usuarioMenu) {
-
             usuarioMenu.innerHTML = `
                 👤 ${usuario.nombre}
             `;
-
         }
 
-
-        // Mostrar el botón de panel de administrador SOLO si el
-        // rol real (validado desde localStorage) es "admin".
+        // Mostrar el botón de panel de administrador SOLO si el rol es "admin"
         if (adminPanelMenu) {
-
             adminPanelMenu.style.display =
                 usuario.rol === "admin" ? "inline-block" : "none";
-
         }
 
     } else {
 
-        // Mostrar iniciar sesión
-        loginMenu.style.display = "inline-block";
-
+        // Volver a mostrar el botón/enlace de login al cerrar sesión
+        if (loginContainer) loginContainer.style.display = "inline-block";
 
         // Ocultar cerrar sesión
         logoutMenu.style.display = "none";
 
-
         if (usuarioMenu) {
-
             usuarioMenu.innerHTML = "";
-
         }
 
-
-        // Sin sesión no hay rol posible: nunca se muestra el botón.
+        // Sin sesión nunca se muestra el botón de admin
         if (adminPanelMenu) {
-
             adminPanelMenu.style.display = "none";
-
         }
 
     }
