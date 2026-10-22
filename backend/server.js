@@ -3,6 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const bcrypt = require("./node_modules/bcryptjs/umd");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 
@@ -19,6 +21,19 @@ const Contacto = mongoose.model(
             telefono: { type: String, required: true, trim: true, maxlength: 20 },
             mensaje: { type: String, required: true, trim: true, maxlength: 1000 },
             leido: { type: Boolean, default: false }
+        },
+        { timestamps: true }
+    )
+);
+
+const Usuario = mongoose.model(
+    "Usuario",
+    new mongoose.Schema(
+        {
+            nombre: { type: String, required: true, trim: true, maxlength: 100 },
+            email: { type: String, required: true, unique: true, lowercase: true, trim: true, maxlength: 120 },
+            passwordHash: { type: String, required: true },
+            rol: { type: String, enum: ["usuario", "admin"], default: "usuario" }
         },
         { timestamps: true }
     )
@@ -60,6 +75,33 @@ app.get("/api/contacto", soloAdmin, async (req, res) => {
     try {
         const mensajes = await Contacto.find().sort({ createdAt: -1 });
         res.json(mensajes);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error del servidor." });
+    }
+});
+
+app.post("/api/registro", async (req, res) => {
+    try {
+        const nombre = String(req.body.nombre || "").trim();
+        const email = String(req.body.email || "").trim().toLowerCase();
+        const password = String(req.body.password || "");
+
+        if (!nombre || !email || password.length < 6) {
+            return res.status(400).json({ error: "Datos inválidos." });
+        }
+
+        if (await Usuario.exists({ email })) {
+            return res.status(409).json({ error: "Ya existe una cuenta con ese correo." });
+        }
+
+        const passwordHash = await bcrypt.hash(password, 10);
+        const rol = email === process.env.ADMIN_EMAIL?.toLowerCase() ? "admin" : "usuario";
+
+        await Usuario.create({ nombre, email, passwordHash, rol });
+
+        res.status(201).json({ ok: true });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Error del servidor." });
