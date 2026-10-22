@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: process.env.ALLOWED_ORIGINS.split(",") }));
+app.use(cors({ origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(",") : "*" }));
 
 /* ---------- Modelo ---------- */
 const Contacto = mongoose.model(
@@ -182,11 +182,16 @@ app.post("/api/chat", async (req, res) => {
 });
 
 /* ---------- Arranque ---------- */
+const PORT = process.env.PORT || 3001;
+
 mongoose
     .connect(process.env.MONGODB_URI)
     .then(() => {
-        app.listen(process.env.PORT, () =>
-            console.log("API lista en http://localhost:" + process.env.PORT)
+        app.listen(PORT, () =>
+            console.log("API lista en el puerto " + PORT)
         );
     })
-    .catch(error => console.error("No se pudo conectar a MongoDB:", error));
+    .catch(error => {
+        console.error("No se pudo conectar a MongoDB:", error);
+        process.exit(1); // Cierra el proceso si falla la BD para que Render detecte el fallo de inmediato
+    });
