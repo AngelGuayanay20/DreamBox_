@@ -124,8 +124,7 @@ function obtenerUsuarioActual() {
 
 }
 
-
-function registrarUsuario(event) {
+async function registrarUsuario(event) {
 
     event.preventDefault();
 
@@ -138,33 +137,32 @@ function registrarUsuario(event) {
     const password =
         document.getElementById("registro-password").value;
 
-    const usuarios = obtenerUsuarios();
+    try {
 
-    if (usuarios.some(u => u.email === email)) {
+        const respuesta = await fetch(API_URL + "/api/registro", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nombre, email, password })
+        });
 
-        alert("Ya existe una cuenta con ese correo.");
+        const data = await respuesta.json();
 
-        return;
+        if (!respuesta.ok) {
+            alert(data.error || "No se pudo crear la cuenta.");
+            return;
+        }
+
+        alert("Cuenta creada correctamente. Ahora inicia sesión.");
+
+        window.location.href = "login.html";
+
+    } catch (error) {
+
+        alert("No se pudo conectar con el servidor.");
+
     }
-
-    const arranqueUsado = localStorage.getItem("adminArranqueUsado") === "true";
-
-    const rol = (!arranqueUsado) ? "admin" : "usuario";
-
-    if (rol === "admin") {
-        localStorage.setItem("adminArranqueUsado", "true");
-    }
-
-    usuarios.push({ nombre, email, password, rol });
-
-    guardarUsuarios(usuarios);
-
-    alert("Cuenta creada correctamente. Ahora inicia sesión.");
-
-    window.location.href = "login.html";
 
 }
-
 
 function iniciarSesion(event) {
 
