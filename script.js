@@ -164,7 +164,7 @@ async function registrarUsuario(event) {
 
 }
 
-function iniciarSesion(event) {
+async function iniciarSesion(event) {
 
     event.preventDefault();
 
@@ -174,30 +174,34 @@ function iniciarSesion(event) {
     const password =
         document.getElementById("login-password").value;
 
-    const usuarios = obtenerUsuarios();
+    try {
 
-    const usuario = usuarios.find(
-        u => u.email === email && u.password === password
-    );
+        const respuesta = await fetch(API_URL + "/api/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
 
-    if (!usuario) {
+        const data = await respuesta.json();
 
-        alert("Correo o contraseña incorrectos.");
+        if (!respuesta.ok) {
+            alert(data.error || "Correo o contraseña incorrectos.");
+            return;
+        }
 
-        return;
+        localStorage.setItem(
+            "usuarioActual",
+            JSON.stringify(data.usuario)
+        );
+
+        window.location.href =
+            data.usuario.rol === "admin" ? "admin.html" : "index.html";
+
+    } catch (error) {
+
+        alert("No se pudo conectar con el servidor.");
+
     }
-
-    localStorage.setItem(
-        "usuarioActual",
-        JSON.stringify({
-            nombre: usuario.nombre,
-            email: usuario.email,
-            rol: usuario.rol
-        })
-    );
-
-    window.location.href =
-        usuario.rol === "admin" ? "admin.html" : "index.html";
 
 }
 
@@ -1404,7 +1408,7 @@ function inicializarAdmin() {
     cargarVentasAdmin();
 
     cargarEstadisticasAdmin();
-    
+
     cargarMensajesAdmin();
 
 }
@@ -1524,7 +1528,7 @@ document.addEventListener(
         inicializarMenuMovil();
 
         inicializarChatbot();
-        
+
     }
 );
 

@@ -108,6 +108,36 @@ app.post("/api/registro", async (req, res) => {
     }
 });
 
+app.post("/api/login", async (req, res) => {
+    try {
+        const email = String(req.body.email || "").trim().toLowerCase();
+        const password = String(req.body.password || "");
+
+        const usuario = await Usuario.findOne({ email });
+        if (!usuario) {
+            return res.status(401).json({ error: "Correo o contraseña incorrectos." });
+        }
+
+        const passwordValida = await bcrypt.compare(password, usuario.passwordHash);
+        if (!passwordValida) {
+            return res.status(401).json({ error: "Correo o contraseña incorrectos." });
+        }
+
+        res.json({
+            ok: true,
+            usuario: {
+                nombre: usuario.nombre,
+                email: usuario.email,
+                rol: usuario.rol
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error del servidor." });
+    }
+});
+
 /* ---------- Chatbot recomendador (Groq) ---------- */
 const ultimoUso = new Map(); // límite simple: 1 mensaje cada 2 segundos por IP
 
