@@ -94,10 +94,6 @@ html, body {
     justify-content: center;
     flex-wrap: wrap;
     gap: 19px;
-    width: 100%;
-    left: 0;
-    right: 0;
-    box-sizing: border-box;
 
 }
 
@@ -2218,17 +2214,56 @@ td input {
 }
 
 @media (max-width: 768px) {
-  .contact-section {
-    width: 92%;
-    padding: 40px 0;
-  }
 
-  .contact-form {
-    width: 100%;
-    padding: 20px 16px;
-    box-sizing: border-box;
-  }
+    .hero-buttons{
+        justify-content: center;
+        gap: 18px;
+    }
+
+    
+    
+    .contact-section {
+        width: 92%;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 40px 0;
+        box-sizing: border-box;
+    }
+
+    .contact-grid {
+        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        box-sizing: border-box;
+    }
+
+    
+    .contact-info {
+        width: 100%;
+        padding: 25px 15px; 
+        box-sizing: border-box;
+    }
+
+    .contact-item {
+        width: 100%;
+        padding: 15px 15px; 
+        box-sizing: border-box;
+        gap: 12px;
+    }
+
+    .contact-form {
+        width: 100%;
+        padding: 20px 15px;
+        box-sizing: border-box;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
+
 
 /* =========================================
     Diseños Responsives 780 - 1024
@@ -2262,6 +2297,12 @@ td input {
 }
 
 @media (max-width: 1023px) {
+
+    .header-actions{
+        width: 100%;
+        justify-content: center;
+        margin-top: 8px;
+    }
 
     .nav {
         position: absolute;
@@ -2341,13 +2382,6 @@ td input {
         gap: 22px 15px;
     }
 
-}
-
-@media (max-width: 1023px) {
-  .header {
-    justify-content: space-between;
-    padding: 15px 4%; 
- }
 }
 
 @media (max-width: 1024px) {
