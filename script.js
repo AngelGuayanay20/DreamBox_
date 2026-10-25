@@ -1600,7 +1600,7 @@ function actualizarMenuUsuario() {
     } else {
 
         // Volver a mostrar el botón/enlace de login al cerrar sesión
-        if (loginContainer) loginContainer.style.display = "inline-block";
+        if (loginContainer) loginContainer.style.display = "";
 
         // Ocultar cerrar sesión
         logoutMenu.style.display = "none";

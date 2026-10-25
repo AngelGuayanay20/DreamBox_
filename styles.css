@@ -23,6 +23,11 @@ a {
     color: inherit;
 }
 
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 /* =========================================
@@ -89,6 +94,10 @@ a {
     justify-content: center;
     flex-wrap: wrap;
     gap: 19px;
+    width: 100%;
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
 
 }
 
@@ -2208,6 +2217,19 @@ td input {
 
 }
 
+@media (max-width: 768px) {
+  .contact-section {
+    width: 92%;
+    padding: 40px 0;
+  }
+
+  .contact-form {
+    width: 100%;
+    padding: 20px 16px;
+    box-sizing: border-box;
+  }
+}
+
 /* =========================================
     Diseños Responsives 780 - 1024
 ========================================= */
@@ -2321,11 +2343,17 @@ td input {
 
 }
 
+@media (max-width: 1023px) {
+  .header {
+    justify-content: space-between;
+    padding: 15px 4%; 
+ }
+}
+
 @media (max-width: 1024px) {
 
     .contact-grid {
         grid-template-columns: 1fr;
     }
-
 
 }
