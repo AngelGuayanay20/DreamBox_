@@ -1186,6 +1186,71 @@ footer p {
     cursor: pointer;
 }
 
+/* =========================================
+   Ventana modal personalizada
+========================================= */
+
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.custom-modal-box {
+    background: #12121a;
+    border: 1px solid #2a2a3c;
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    color: #fff;
+    font-family: inherit;
+}
+
+.custom-modal-box p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.custom-modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.custom-modal-buttons button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+}
+
+.custom-modal-buttons button:hover {
+    opacity: 0.85;
+}
+
+.btn-modal-aceptar {
+    background: #bfff00;
+    color: #000;
+}
+
+.btn-modal-cancelar {
+    background: #2a2a3c;
+    color: #fff;
+}
+
 
 /* =========================================
         Fin de Css de Index.html

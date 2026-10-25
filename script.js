@@ -148,17 +148,17 @@ async function registrarUsuario(event) {
         const data = await respuesta.json();
 
         if (!respuesta.ok) {
-            alert(data.error || "No se pudo crear la cuenta.");
+            await mostrarModal(data.error || "No se pudo crear la cuenta.");
             return;
         }
 
-        alert("Cuenta creada correctamente. Ahora inicia sesión.");
+        await mostrarModal("Cuenta creada correctamente. Ahora inicia sesión.");
 
         window.location.href = "login.html";
 
     } catch (error) {
 
-        alert("No se pudo conectar con el servidor.");
+        await mostrarModal("No se pudo conectar con el servidor.");
 
     }
 
@@ -184,8 +184,8 @@ async function iniciarSesion(event) {
 
         const data = await respuesta.json();
 
-        if (!respuesta.ok) {
-            alert(data.error || "Correo o contraseña incorrectos.");
+        if (!usuario) {
+            await mostrarModal("Correo o contraseña incorrectos.");
             return;
         }
 
@@ -199,25 +199,21 @@ async function iniciarSesion(event) {
 
     } catch (error) {
 
-        alert("No se pudo conectar con el servidor.");
+        await mostrarModal("No se pudo conectar con el servidor.");
 
     }
 
 }
 
 
-function verificarAdmin() {
+async function verificarAdmin() {
 
     const usuario = obtenerUsuarioActual();
 
     if (!usuario || usuario.rol !== "admin") {
-
-        alert("No tienes permisos para acceder al panel de administrador.");
-
+        await mostrarModal("No tienes permisos para acceder al panel de administrador.");
         window.location.href = "index.html";
-
         return false;
-
     }
 
     return true;
@@ -433,6 +429,60 @@ function cerrarCarrito() {
 
 }
 
+function mostrarModal(mensaje, esConfirmacion = false) {
+    return new Promise((resolve) => {
+        const overlay = document.getElementById("custom-modal");
+        const texto = document.getElementById("custom-modal-mensaje");
+        const acciones = document.getElementById("custom-modal-actions");
+
+        if (!overlay) {
+            // Plan de respaldo por si el HTML no cargó el modal todavía
+            if (esConfirmacion) {
+                resolve(confirm(mensaje));
+            } else {
+                alert(mensaje);
+                resolve(true);
+            }
+            return;
+        }
+
+        texto.textContent = mensaje;
+        acciones.innerHTML = "";
+
+        if (esConfirmacion) {
+            const btnCancelar = document.createElement("button");
+            btnCancelar.textContent = "Cancelar";
+            btnCancelar.className = "btn-modal-cancelar";
+            btnCancelar.onclick = () => {
+                overlay.style.display = "none";
+                resolve(false);
+            };
+
+            const btnAceptar = document.createElement("button");
+            btnAceptar.textContent = "Aceptar";
+            btnAceptar.className = "btn-modal-aceptar";
+            btnAceptar.onclick = () => {
+                overlay.style.display = "none";
+                resolve(true);
+            };
+
+            acciones.appendChild(btnCancelar);
+            acciones.appendChild(btnAceptar);
+        } else {
+            const btnAceptar = document.createElement("button");
+            btnAceptar.textContent = "Aceptar";
+            btnAceptar.className = "btn-modal-aceptar";
+            btnAceptar.onclick = () => {
+                overlay.style.display = "none";
+                resolve(true);
+            };
+            acciones.appendChild(btnAceptar);
+        }
+
+        overlay.style.display = "flex";
+    });
+}
+
 
 /* =====================================================
    GAMEZONE - DETALLE DE PRODUCTO
@@ -604,7 +654,7 @@ function cargarAdmin() {
 }
 
 
-function actualizarStockAdmin(id, nuevoValor) {
+async function actualizarStockAdmin(id, nuevoValor) {
 
     const productos = obtenerProductos();
 
@@ -615,11 +665,8 @@ function actualizarStockAdmin(id, nuevoValor) {
     const valor = parseInt(nuevoValor);
 
     if (isNaN(valor) || valor < 0) {
-
-        alert("Ingresa un número válido (0 o mayor).");
-
+        await mostrarModal("Ingresa un número válido (0 o mayor).");
         cargarAdmin();
-
         return;
     }
 
@@ -632,10 +679,9 @@ function actualizarStockAdmin(id, nuevoValor) {
 }
 
 
-function eliminarProductoAdmin(id) {
+async function eliminarProductoAdmin(id) {
 
-    const confirmar = confirm("¿Eliminar este videojuego?");
-
+    const confirmar = await mostrarModal("¿Eliminar este videojuego?", true);
     if (!confirmar) return;
 
     let productos = obtenerProductos();
@@ -874,18 +920,13 @@ function registrarVenta(carrito, usuario) {
    FINALIZAR COMPRA ACTUALIZADO
 ===================================================== */
 
-function finalizarCompra() {
+async function finalizarCompra() {
 
     const usuario = obtenerUsuarioActual();
 
     if (!usuario) {
-
-        alert(
-            "Debes iniciar sesión para realizar la compra."
-        );
-
+        await mostrarModal("Debes iniciar sesión para realizar la compra.");
         window.location.href = "login.html";
-
         return;
     }
 
@@ -895,9 +936,7 @@ function finalizarCompra() {
 
     if (carrito.length === 0) {
 
-        alert(
-            "Tu carrito está vacío."
-        );
+        await mostrarModal("Tu carrito está vacío.");
 
         return;
     }
@@ -915,9 +954,7 @@ function finalizarCompra() {
 
         if (!producto) {
 
-            alert(
-                `El producto ${item.nombre} ya no existe.`
-            );
+            await mostrarModal(`El producto ${item.nombre} ya no existe.`);
 
             return;
         }
@@ -925,9 +962,7 @@ function finalizarCompra() {
 
         if (producto.stock < item.cantidad) {
 
-            alert(
-                `No hay suficiente stock de ${item.nombre}.`
-            );
+            await mostrarModal(`No hay suficiente stock de ${item.nombre}.`);
 
             return;
         }
@@ -970,9 +1005,7 @@ function finalizarCompra() {
     localStorage.removeItem("carrito");
 
 
-    alert(
-        "¡Compra realizada correctamente! 🎮"
-    );
+    await mostrarModal("¡Compra realizada correctamente! 🎮");
 
 
     cerrarCarrito();
@@ -1650,45 +1683,33 @@ function inicializarMenuMovil() {
 }
 
 
-function irAlPanelAdmin() {
+async function irAlPanelAdmin() {
 
     // Doble verificación real de rol antes de navegar, además de la
     // validación que ya hace verificarAdmin() dentro de admin.html.
     const usuario = obtenerUsuarioActual();
 
     if (!usuario || usuario.rol !== "admin") {
-
-        alert("No tienes permisos para acceder al panel de administrador.");
-
+        await mostrarModal("No tienes permisos para acceder al panel de administrador.");
         return;
-
     }
+
 
     window.location.href = "admin.html";
 
 }
 
-function cerrarSesion() {
+async function cerrarSesion() {
 
-    const confirmar =
-        confirm(
-            "¿Seguro que deseas cerrar sesión?"
-        );
-
-
-    if (!confirmar) {
-        return;
-    }
-
+    const confirmar = await mostrarModal("¿Seguro que deseas cerrar sesión?", true);
+    if (!confirmar) { return; }
 
     localStorage.removeItem(
         "usuarioActual"
     );
 
 
-    alert(
-        "Sesión cerrada correctamente."
-    );
+    await mostrarModal("Sesión cerrada correctamente.");
 
 
     window.location.href =
