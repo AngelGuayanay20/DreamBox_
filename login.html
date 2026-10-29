@@ -33,7 +33,12 @@
             <input id="login-email" type="email" placeholder="tucorreo@ejemplo.com" required>
 
             <label for="login-password">Contraseña</label>
-            <input id="login-password" type="password" placeholder="••••••••" required>
+
+            <div class="password-wrapper">
+                <input id="login-password" type="password" placeholder="••••••••" required>
+                <button type="button" class="toggle-password" aria-label="Mostrar contraseña"
+                    onclick="mostrarOcultarPassword('login-password', this)">👁️</button>
+            </div>
 
             <button type="submit" class="auth-button">Iniciar sesión</button>
 

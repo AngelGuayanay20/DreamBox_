@@ -12,93 +12,57 @@ function fetchConTimeout(url, opciones = {}, ms = 60000) {
    GAMEZONE - PRODUCTOS (CATÁLOGO)
 ===================================================== */
 
-function obtenerProductos() {
+let productosCache = [];
+let productosError = false;
 
-    let productos = JSON.parse(
-        localStorage.getItem("productos") || "null"
-    );
-
-    if (!productos) {
-
-        productos = [
-            {
-                id: 1,
-                nombre: "Elden Ring",
-                precio: 59.99,
-                stock: 10,
-                plataforma: ["PC", "PlayStation", "Xbox"],
-                genero: "RPG",
-                imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg",
-                descripcion: "Un vasto mundo de fantasía oscura creado por FromSoftware."
-            },
-            {
-                id: 2,
-                nombre: "Cyberpunk 2077",
-                precio: 49.99,
-                stock: 8,
-                plataforma: ["PC", "PlayStation", "Xbox"],
-                genero: "Acción",
-                imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg",
-                descripcion: "Un RPG de acción y aventura en Night City."
-            },
-            {
-                id: 3,
-                nombre: "Spider-Man Remastered",
-                precio: 59.99,
-                stock: 5,
-                plataforma: ["PC", "PlayStation"],
-                genero: "Aventura",
-                imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/1817070/header.jpg",
-                descripcion: "Balancéate por Nueva York en la piel de Spider-Man."
-            },
-            {
-                id: 4,
-                nombre: "The Legend of Zelda: Tears of the Kingdom",
-                precio: 69.99,
-                stock: 12,
-                plataforma: ["Nintendo"],
-                genero: "Aventura",
-                imagen: "https://i.ytimg.com/vi/gp9aY09li1s/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCKs1QqnvLBAnzop7KvoPsvqedjlQ",
-                descripcion: "Explora los cielos y las tierras de Hyrule en la nueva aventura de Link."
-            },
-            {
-                id: 5,
-                nombre: "Mario Kart 8 Deluxe",
-                precio: 59.99,
-                stock: 15,
-                plataforma: ["Nintendo"],
-                genero: "Carreras",
-                imagen: "https://i.ytimg.com/vi/HulSYumqceU/maxresdefault.jpg",
-                descripcion: "El clásico de carreras de Nintendo, ahora con todo el contenido descargable incluido."
-            },
-            {
-                id: 6,
-                nombre: "Forza Horizon 5",
-                precio: 49.99,
-                stock: 9,
-                plataforma: ["PC", "Xbox"],
-                genero: "Carreras",
-                imagen: "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg",
-                descripcion: "Recorre el vibrante y siempre cambiante mundo abierto de México."
-            }
-        ];
-
-        guardarProductos(productos);
+async function cargarProductosDesdeAPI() {
+    try {
+        const respuesta = await fetchConTimeout(API_URL + "/api/productos");
+        if (!respuesta.ok) throw new Error("Respuesta no válida");
+        productosCache = await respuesta.json();
+        productosError = false;
+    } catch (error) {
+        productosCache = [];
+        productosError = true;
     }
-
-    return productos;
+    return !productosError;
 }
 
-
-function guardarProductos(productos) {
-
-    localStorage.setItem(
-        "productos",
-        JSON.stringify(productos)
-    );
-
+function obtenerProductos() {
+    return productosCache;
 }
 
+async function apiProductos(metodo, id, cuerpo) {
+    try {
+        const respuesta = await fetchConTimeout(
+            API_URL + "/api/productos" + (id ? "/" + id : ""),
+            {
+                method: metodo,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                },
+                body: cuerpo ? JSON.stringify(cuerpo) : undefined
+            }
+        );
+
+        const data = await respuesta.json().catch(() => ({}));
+
+        if (!respuesta.ok) {
+            await mostrarModal(data.error || "No se pudo completar la acción.");
+            return false;
+        }
+
+        await cargarProductosDesdeAPI();
+        cargarAdmin();
+        cargarEstadisticasAdmin();
+        return true;
+
+    } catch (error) {
+        await mostrarModal("No se pudo conectar con el servidor. Puede estar despertando; inténtalo de nuevo en unos segundos.");
+        return false;
+    }
+}
 
 /* =====================================================
    GAMEZONE - SISTEMA DE USUARIOS
@@ -537,6 +501,22 @@ function mostrarModal(mensaje, esConfirmacion = false) {
     });
 }
 
+function mostrarOcultarPassword(idInput, boton) {
+
+    const input = document.getElementById(idInput);
+
+    const estabaVisible = input.type === "text";
+
+    input.type = estabaVisible ? "password" : "text";
+
+    boton.textContent = estabaVisible ? "👁️" : "🙈";
+
+    boton.setAttribute(
+        "aria-label",
+        estabaVisible ? "Mostrar contraseña" : "Ocultar contraseña"
+    );
+
+}
 
 /* =====================================================
    GAMEZONE - DETALLE DE PRODUCTO
@@ -666,6 +646,8 @@ function filtrarPlataforma(plataforma, boton) {
    GAMEZONE - ADMIN: PRODUCTOS
 ===================================================== */
 
+let productoEditandoId = null;
+
 function cargarAdmin() {
 
     const tabla =
@@ -679,6 +661,11 @@ function cargarAdmin() {
             .sort((a, b) => a.id - b.id);
 
     tabla.innerHTML = "";
+
+    if (productos.length === 0) {
+        tabla.innerHTML = `<tr><td colspan="6" class="empty-table">No hay videojuegos${productosError ? " (no se pudo conectar con el servidor)" : ""}.</td></tr>`;
+        return;
+    }
 
     productos.forEach(producto => {
 
@@ -698,7 +685,8 @@ function cargarAdmin() {
                     >
                 </td>
                 <td>
-                    <button class="delete-button" onclick="eliminarProductoAdmin(${producto.id})">Eliminar</button>
+                  <button class="edit-button" onclick="editarProductoAdmin(${producto.id})">Editar</button>
+                  <button class="delete-button" onclick="eliminarProductoAdmin(${producto.id})">Eliminar</button>
                 </td>
             </tr>
         `;
@@ -707,14 +695,7 @@ function cargarAdmin() {
 
 }
 
-
 async function actualizarStockAdmin(id, nuevoValor) {
-
-    const productos = obtenerProductos();
-
-    const producto = productos.find(p => p.id === id);
-
-    if (!producto) return;
 
     const valor = parseInt(nuevoValor);
 
@@ -724,46 +705,28 @@ async function actualizarStockAdmin(id, nuevoValor) {
         return;
     }
 
-    producto.stock = valor;
+    const ok = await apiProductos("PUT", id, { stock: valor });
 
-    guardarProductos(productos);
-
-    cargarEstadisticasAdmin();
-
+    if (!ok) cargarAdmin();
 }
-
 
 async function eliminarProductoAdmin(id) {
 
     const confirmar = await mostrarModal("¿Eliminar este videojuego?", true);
     if (!confirmar) return;
 
-    let productos = obtenerProductos();
+    const ok = await apiProductos("DELETE", id);
 
-    productos = productos.filter(p => p.id !== id);
-
-    guardarProductos(productos);
-
-    cargarAdmin();
-
-    cargarEstadisticasAdmin();
-
+    if (ok && productoEditandoId === id) cancelarEdicionAdmin();
 }
 
-
-function agregarProductoAdmin(event) {
+async function agregarProductoAdmin(event) {
 
     event.preventDefault();
 
-    const productos = obtenerProductos();
+    const formulario = event.target;
 
-    const nuevoId =
-        productos.length === 0
-            ? 1
-            : Math.max(...productos.map(p => p.id)) + 1;
-
-    const nuevoProducto = {
-        id: nuevoId,
+    const datos = {
         nombre: document.getElementById("admin-nombre").value.trim(),
         precio: parseFloat(document.getElementById("admin-precio").value),
         stock: parseInt(document.getElementById("admin-stock").value),
@@ -776,15 +739,53 @@ function agregarProductoAdmin(event) {
         descripcion: document.getElementById("admin-descripcion").value.trim()
     };
 
-    productos.push(nuevoProducto);
+    if (productoEditandoId !== null) {
 
-    guardarProductos(productos);
+        const ok = await apiProductos("PUT", productoEditandoId, datos);
+        if (ok) cancelarEdicionAdmin();
 
-    event.target.reset();
+    } else {
 
-    cargarAdmin();
+        const ok = await apiProductos("POST", null, datos);
+        if (ok) formulario.reset();
 
-    cargarEstadisticasAdmin();
+    }
+
+}
+
+function editarProductoAdmin(id) {
+
+    const producto = obtenerProductos().find(p => p.id === id);
+
+    if (!producto) return;
+
+    productoEditandoId = id;
+
+    document.getElementById("admin-nombre").value = producto.nombre;
+    document.getElementById("admin-precio").value = producto.precio;
+    document.getElementById("admin-stock").value = producto.stock;
+    document.getElementById("admin-plataforma").value = producto.plataforma.join(", ");
+    document.getElementById("admin-genero").value = producto.genero;
+    document.getElementById("admin-imagen").value = producto.imagen;
+    document.getElementById("admin-descripcion").value = producto.descripcion;
+
+    document.getElementById("admin-submit-btn").textContent = "Guardar cambios";
+    document.getElementById("admin-cancel-btn").style.display = "block";
+
+    document.querySelector(".admin-form")
+        .scrollIntoView({ behavior: "smooth", block: "center" });
+
+}
+
+
+function cancelarEdicionAdmin() {
+
+    productoEditandoId = null;
+
+    document.querySelector(".admin-form").reset();
+
+    document.getElementById("admin-submit-btn").textContent = "Agregar videojuego";
+    document.getElementById("admin-cancel-btn").style.display = "none";
 
 }
 
@@ -995,52 +996,32 @@ async function finalizarCompra() {
         return;
     }
 
+    let respuesta;
 
-    const productos = obtenerProductos();
-
-
-    for (const item of carrito) {
-
-        const producto = productos.find(
-            p => p.id === item.id
-        );
-
-
-        if (!producto) {
-
-            await mostrarModal(`El producto ${item.nombre} ya no existe.`);
-
-            return;
-        }
-
-
-        if (producto.stock < item.cantidad) {
-
-            await mostrarModal(`No hay suficiente stock de ${item.nombre}.`);
-
-            return;
-        }
-
+    try {
+        respuesta = await fetchConTimeout(API_URL + "/api/compra", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            body: JSON.stringify({
+                items: carrito.map(i => ({ id: i.id, cantidad: i.cantidad }))
+            })
+        });
+    } catch (error) {
+        await mostrarModal("No se pudo conectar con el servidor. Inténtalo de nuevo en unos segundos.");
+        return;
     }
 
+    const dataCompra = await respuesta.json().catch(() => ({}));
 
-    /*
-       DESCONTAR STOCK
-    */
-
-    carrito.forEach(item => {
-
-        const producto = productos.find(
-            p => p.id === item.id
-        );
-
-        producto.stock -= item.cantidad;
-
-    });
-
-
-    guardarProductos(productos);
-
+    if (!respuesta.ok) {
+        await mostrarModal(dataCompra.error || "No se pudo procesar la compra.");
+        await cargarProductosDesdeAPI();
+        cargarCatalogo();
+        return;
+    }
 
     /*
        REGISTRAR VENTA
@@ -1073,6 +1054,7 @@ async function finalizarCompra() {
        ACTUALIZAR CATÁLOGO
     */
 
+    await cargarProductosDesdeAPI();
     cargarCatalogo();
 
 }
@@ -1331,10 +1313,11 @@ function cargarCatalogo() {
         contenedor.innerHTML = `
 
             <p class="empty-table">
-                No hay videojuegos disponibles.
+                ${productosError
+                ? "No se pudieron cargar los videojuegos. El servidor puede estar despertando; recarga en unos segundos."
+                : "No hay videojuegos disponibles."}
             </p>
-
-        `;
+          `;
 
         return;
     }
@@ -1596,34 +1579,34 @@ async function validarFormularioContacto(event) {
    INICIO DEL SISTEMA
 ===================================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
-        actualizarContadorCarrito();
+    actualizarContadorCarrito();
+    mostrarCarrito();
+    actualizarMenuUsuario();
+    inicializarMenuMovil();
+    inicializarChatbot();
 
-        mostrarCarrito();
+    localStorage.removeItem("productos");
 
-        cargarDetalle();
+    const grid = document.getElementById("catalogo-productos");
+    if (grid) grid.innerHTML = `<p class="empty-table">Cargando videojuegos…</p>`;
 
-        cargarCatalogo();
-
-        inicializarAdmin();
-
-        actualizarMenuUsuario();
-
-        inicializarMenuMovil();
-
-        inicializarChatbot();
-
+    if (grid || document.getElementById("detalle-producto") || document.getElementById("tabla-productos")) {
+        await cargarProductosDesdeAPI();
     }
-);
+
+    cargarDetalle();
+    cargarCatalogo();
+    inicializarAdmin();
+
+});
 
 function actualizarMenuUsuario() {
 
     const usuario = obtenerUsuarioActual();
 
-    const loginContainer = document.getElementById("login-container"); // Ahora es un <a>
+    const loginContainer = document.getElementById("login-container");
     const logoutMenu = document.getElementById("logout-menu");
     const usuarioMenu = document.getElementById("usuario-menu");
     const adminPanelMenu = document.getElementById("admin-panel-menu");
@@ -1890,10 +1873,7 @@ function inicializarChatbot() {
             const respuesta = await fetch(API_URL + "/api/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    historial: chatHistorial,
-                    catalogo: obtenerProductos()
-                })
+                body: JSON.stringify({ historial: chatHistorial })
             });
 
             if (!respuesta.ok) throw new Error("Respuesta no válida");

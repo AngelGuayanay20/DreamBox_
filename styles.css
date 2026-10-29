@@ -1536,6 +1536,26 @@ footer p {
     color: #777784;
 }
 
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 48px;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
 /* =========================================
         Fin de Css de login y registro.html
 ========================================= */
@@ -1953,6 +1973,26 @@ td input {
     border-radius: 5px;
 
     cursor: pointer;
+}
+
+.edit-button {
+    border: none;
+    background: #1f2a2a;
+    color: var(--lime);
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 6px;
+}
+
+.admin-cancel-button {
+    background: #292939;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 13px;
+    cursor: pointer;
+    grid-column: 1 / -1;
 }
 
 .empty-table {
