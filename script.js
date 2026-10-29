@@ -68,25 +68,6 @@ async function apiProductos(metodo, id, cuerpo) {
    GAMEZONE - SISTEMA DE USUARIOS
 ===================================================== */
 
-function obtenerUsuarios() {
-
-    return JSON.parse(
-        localStorage.getItem("usuarios") || "[]"
-    );
-
-}
-
-
-function guardarUsuarios(usuarios) {
-
-    localStorage.setItem(
-        "usuarios",
-        JSON.stringify(usuarios)
-    );
-
-}
-
-
 function obtenerUsuarioActual() {
 
     return JSON.parse(
@@ -790,183 +771,132 @@ function cancelarEdicionAdmin() {
 }
 
 
-function cargarUsuariosAdmin() {
+let usuariosCache = [];
+let ventasCache = [];
+
+async function pedirAlServidorAdmin(ruta) {
+
+    try {
+        const respuesta = await fetchConTimeout(API_URL + ruta, {
+            headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
+        });
+
+        if (respuesta.status === 401 || respuesta.status === 403) {
+            return { error: "No autorizado. Vuelve a iniciar sesión." };
+        }
+
+        if (!respuesta.ok) return { error: "Respuesta no válida del servidor." };
+
+        return { datos: await respuesta.json() };
+
+    } catch (error) {
+        return { error: "No se pudo conectar con el servidor." };
+    }
+}
+
+
+async function cargarUsuariosAdmin() {
 
     const tabla = document.getElementById("tabla-usuarios");
 
     if (!tabla) return;
 
-    const usuarios = obtenerUsuarios();
+    const { datos, error } = await pedirAlServidorAdmin("/api/usuarios");
 
-    tabla.innerHTML = "";
+    usuariosCache = datos || [];
 
-    if (usuarios.length === 0) {
+    if (error || usuariosCache.length === 0) {
 
         tabla.innerHTML = `
-
             <tr>
-
                 <td colspan="3" class="empty-table">
-                    Todavía no hay usuarios registrados.
+                    ${error || "Todavía no hay usuarios registrados."}
                 </td>
-
             </tr>
-
         `;
 
         return;
     }
 
-    usuarios.forEach(usuario => {
-
-        tabla.innerHTML += `
-            <tr>
-
-                <td>
-                    ${usuario.nombre}
-                </td>
-
-                <td>
-                    ${usuario.email}
-                </td>
-
-                <td>
-                    <select
-                        class="role-select"
-                        onchange="cambiarRolAdmin('${usuario.email}', this.value)"
-                    >
-                        <option value="usuario" ${usuario.rol === "usuario" ? "selected" : ""}>Usuario</option>
-                        <option value="admin" ${usuario.rol === "admin" ? "selected" : ""}>Admin</option>
-                    </select>
-                </td>
-
-            </tr>
-        `;
-
-    });
+    tabla.innerHTML = usuariosCache.map(usuario => `
+        <tr>
+            <td>${escaparHTML(usuario.nombre)}</td>
+            <td>${escaparHTML(usuario.email)}</td>
+            <td>
+                <select
+                    class="role-select"
+                    onchange="cambiarRolAdmin('${usuario.id}', this.value)"
+                >
+                    <option value="usuario" ${usuario.rol === "usuario" ? "selected" : ""}>Usuario</option>
+                    <option value="admin" ${usuario.rol === "admin" ? "selected" : ""}>Admin</option>
+                </select>
+            </td>
+        </tr>
+    `).join("");
 
 }
 
 
-function cambiarRolAdmin(email, nuevoRol) {
+async function cambiarRolAdmin(id, nuevoRol) {
 
-    const usuarioActual = obtenerUsuarioActual();
+    const actual = obtenerUsuarioActual();
+    const objetivo = usuariosCache.find(u => u.id === id);
 
-    if (usuarioActual && usuarioActual.email === email && nuevoRol !== "admin") {
+    if (!objetivo) return;
 
-        const confirmar = confirm(
-            "Estás a punto de quitarte el rol de administrador a ti mismo. ¿Deseas continuar?"
+    const esUnoMismo = actual && actual.email === objetivo.email;
+
+    if (esUnoMismo && nuevoRol !== "admin") {
+
+        const confirmar = await mostrarModal(
+            "Estás a punto de quitarte el rol de administrador a ti mismo. ¿Deseas continuar?",
+            true
         );
 
         if (!confirmar) {
-
             cargarUsuariosAdmin();
+            return;
+        }
+    }
 
+    try {
+
+        const respuesta = await fetchConTimeout(API_URL + "/api/usuarios/" + id + "/rol", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            body: JSON.stringify({ rol: nuevoRol })
+        });
+
+        const data = await respuesta.json().catch(() => ({}));
+
+        if (!respuesta.ok) {
+            await mostrarModal(data.error || "No se pudo cambiar el rol.");
+            cargarUsuariosAdmin();
             return;
         }
 
+    } catch (error) {
+        await mostrarModal("No se pudo conectar con el servidor.");
+        cargarUsuariosAdmin();
+        return;
     }
 
-    cambiarRolUsuario(email, nuevoRol);
-
-    cargarUsuariosAdmin();
-
-}
-
-
-function cambiarRolUsuario(email, nuevoRol) {
-
-    const usuarios = obtenerUsuarios();
-
-    const usuario = usuarios.find(u => u.email === email);
-
-    if (!usuario) return;
-
-    usuario.rol = nuevoRol;
-
-    guardarUsuarios(usuarios);
-
-    // Si el admin se cambió el rol a sí mismo, actualizar también su sesión activa
-    const usuarioActual = obtenerUsuarioActual();
-
-    if (usuarioActual && usuarioActual.email === email) {
+    if (esUnoMismo && nuevoRol !== "admin") {
 
         localStorage.setItem(
             "usuarioActual",
-            JSON.stringify({ ...usuarioActual, rol: nuevoRol })
+            JSON.stringify({ ...actual, rol: nuevoRol })
         );
 
+        window.location.href = "index.html";
+        return;
     }
 
+    await cargarUsuariosAdmin();
     cargarEstadisticasAdmin();
-
-}
-
-
-/* =====================================================
-   SISTEMA DE VENTAS
-===================================================== */
-
-function obtenerVentas() {
-
-    return JSON.parse(
-        localStorage.getItem("ventas") || "[]"
-    );
-
-}
-
-
-function guardarVentas(ventas) {
-
-    localStorage.setItem(
-        "ventas",
-        JSON.stringify(ventas)
-    );
-
-}
-
-
-/* =====================================================
-   REGISTRAR VENTA
-===================================================== */
-
-function registrarVenta(carrito, usuario) {
-
-    const ventas = obtenerVentas();
-
-    let total = 0;
-
-    carrito.forEach(item => {
-
-        total += item.precio * item.cantidad;
-
-    });
-
-
-    const nuevaVenta = {
-
-        id: Date.now(),
-
-        fecha: new Date().toLocaleString(),
-
-        usuario: {
-
-            nombre: usuario.nombre,
-
-            email: usuario.email
-
-        },
-
-        productos: carrito,
-
-        total: total
-
-    };
-
-
-    ventas.push(nuevaVenta);
-
-    guardarVentas(ventas);
 
 }
 
@@ -1024,16 +954,6 @@ async function finalizarCompra() {
     }
 
     /*
-       REGISTRAR VENTA
-    */
-
-    registrarVenta(
-        carrito,
-        usuario
-    );
-
-
-    /*
        VACIAR CARRITO
     */
 
@@ -1064,93 +984,39 @@ async function finalizarCompra() {
    CARGAR VENTAS ADMIN
 ===================================================== */
 
-function cargarVentasAdmin() {
+async function cargarVentasAdmin() {
 
-    const tabla =
-        document.getElementById(
-            "tabla-ventas"
-        );
-
+    const tabla = document.getElementById("tabla-ventas");
 
     if (!tabla) return;
 
+    const { datos, error } = await pedirAlServidorAdmin("/api/ventas");
 
-    const ventas = obtenerVentas();
+    ventasCache = datos || [];
 
-
-    tabla.innerHTML = "";
-
-
-    if (ventas.length === 0) {
+    if (error || ventasCache.length === 0) {
 
         tabla.innerHTML = `
-
             <tr>
-
-                <td
-                    colspan="6"
-                    class="empty-table"
-                >
-                    No existen ventas todavía.
+                <td colspan="6" class="empty-table">
+                    ${error || "No existen ventas todavía."}
                 </td>
-
             </tr>
-
         `;
 
         return;
     }
 
-
-    ventas
-        .slice()
-        .reverse()
-        .forEach(venta => {
-
-            const productos =
-                venta.productos
-                    .map(
-                        producto =>
-                            `${producto.nombre} x${producto.cantidad}`
-                    )
-                    .join("<br>");
-
-
-            tabla.innerHTML += `
-
-                <tr>
-
-                    <td>
-                        #${venta.id}
-                    </td>
-
-                    <td>
-                        ${venta.usuario.nombre}
-                    </td>
-
-                    <td>
-                        ${venta.usuario.email}
-                    </td>
-
-                    <td>
-                        ${productos}
-                    </td>
-
-                    <td>
-                        <strong>
-                            $${venta.total.toFixed(2)}
-                        </strong>
-                    </td>
-
-                    <td>
-                        ${venta.fecha}
-                    </td>
-
-                </tr>
-
-            `;
-
-        });
+    tabla.innerHTML = ventasCache.map(venta => `
+        <tr>
+            <td>#${venta.id.slice(-6)}</td>
+            <td>${escaparHTML(venta.usuario.nombre)}</td>
+            <td>${escaparHTML(venta.usuario.email)}</td>
+            <td>${venta.productos.map(p => `${escaparHTML(p.nombre)} x${p.cantidad}`).join("<br>")}</td>
+            <td><strong>$${Number(venta.total).toFixed(2)}</strong></td>
+            <td>${new Date(venta.createdAt).toLocaleString()}</td>
+        </tr>
+    `).join("");
 
 }
 
@@ -1161,127 +1027,31 @@ function cargarVentasAdmin() {
 
 function cargarEstadisticasAdmin() {
 
-    const productos =
-        obtenerProductos();
+    const productos = obtenerProductos();
 
+    const poner = (id, valor) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = valor;
+    };
 
-    const usuarios =
-        JSON.parse(
-            localStorage.getItem("usuarios") || "[]"
-        );
+    poner("total-productos-admin", productos.length);
 
+    poner(
+        "total-usuarios-admin",
+        usuariosCache.filter(u => u.rol === "usuario").length
+    );
 
-    const ventas =
-        obtenerVentas();
+    poner("total-ventas-admin", ventasCache.length);
 
+    poner(
+        "dinero-ventas-admin",
+        "$" + ventasCache.reduce((total, v) => total + v.total, 0).toFixed(2)
+    );
 
-    /*
-       TOTAL DE PRODUCTOS
-    */
-
-    const totalProductos =
-        document.getElementById(
-            "total-productos-admin"
-        );
-
-
-    if (totalProductos) {
-
-        totalProductos.textContent =
-            productos.length;
-
-    }
-
-
-    /*
-       TOTAL USUARIOS
-    */
-
-    const totalUsuarios =
-        document.getElementById(
-            "total-usuarios-admin"
-        );
-
-
-    if (totalUsuarios) {
-
-        totalUsuarios.textContent =
-            usuarios.filter(
-                usuario =>
-                    usuario.rol === "usuario"
-            ).length;
-
-    }
-
-
-    /*
-       TOTAL VENTAS
-    */
-
-    const totalVentas =
-        document.getElementById(
-            "total-ventas-admin"
-        );
-
-
-    if (totalVentas) {
-
-        totalVentas.textContent =
-            ventas.length;
-
-    }
-
-
-    /*
-       DINERO VENDIDO
-    */
-
-    const dineroVentas =
-        document.getElementById(
-            "dinero-ventas-admin"
-        );
-
-
-    const totalDinero =
-        ventas.reduce(
-            (total, venta) =>
-                total + venta.total,
-            0
-        );
-
-
-    if (dineroVentas) {
-
-        dineroVentas.textContent =
-            "$" + totalDinero.toFixed(2);
-
-    }
-
-
-    /*
-       STOCK TOTAL
-    */
-
-    const stockTotal =
-        document.getElementById(
-            "stock-total-admin"
-        );
-
-
-    const totalStock =
-        productos.reduce(
-            (total, producto) =>
-                total + Number(producto.stock),
-            0
-        );
-
-
-    if (stockTotal) {
-
-        stockTotal.textContent =
-            totalStock;
-
-    }
+    poner(
+        "stock-total-admin",
+        productos.reduce((total, p) => total + Number(p.stock), 0)
+    );
 
 }
 
@@ -1473,9 +1243,10 @@ async function inicializarAdmin() {
 
     cargarAdmin();
 
-    cargarUsuariosAdmin();
-
-    cargarVentasAdmin();
+    await Promise.all([
+        cargarUsuariosAdmin(),
+        cargarVentasAdmin()
+    ]);
 
     cargarEstadisticasAdmin();
 

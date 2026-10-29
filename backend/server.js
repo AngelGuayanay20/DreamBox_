@@ -56,6 +56,28 @@ const Producto = mongoose.model(
     )
 );
 
+const Venta = mongoose.model(
+    "Venta",
+    new mongoose.Schema(
+        {
+            usuario: {
+                nombre: { type: String, required: true },
+                email: { type: String, required: true }
+            },
+            productos: [
+                {
+                    id: Number,
+                    nombre: String,
+                    precio: Number,
+                    cantidad: Number
+                }
+            ],
+            total: { type: Number, required: true }
+        },
+        { timestamps: true }
+    )
+);
+
 async function sembrarProductos() {
     if (await Producto.estimatedDocumentCount() > 0) return;
 
@@ -105,11 +127,19 @@ function verificarToken(req, res, next) {
 }
 
 function soloAdmin(req, res, next) {
-    verificarToken(req, res, () => {
-        if (req.usuario.rol !== "admin") {
-            return res.status(403).json({ error: "Requiere rol de administrador." });
+    verificarToken(req, res, async () => {
+        try {
+            const usuario = await Usuario.findById(req.usuario.id).select("rol");
+
+            if (!usuario || usuario.rol !== "admin") {
+                return res.status(403).json({ error: "Requiere rol de administrador." });
+            }
+
+            next();
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Error del servidor." });
         }
-        next();
     });
 }
 
@@ -286,7 +316,75 @@ app.delete("/api/productos/:id", soloAdmin, async (req, res) => {
     }
 });
 
-/* Compra: descuenta stock de forma atómica (nadie puede comprar más de lo que hay) */
+app.get("/api/usuarios", soloAdmin, async (req, res) => {
+    try {
+        const usuarios = await Usuario.find().sort({ createdAt: 1 }).select("nombre email rol").lean();
+
+        res.json(usuarios.map(u => ({
+            id: u._id,
+            nombre: u.nombre,
+            email: u.email,
+            rol: u.rol
+        })));
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error del servidor." });
+    }
+});
+
+app.put("/api/usuarios/:id/rol", soloAdmin, async (req, res) => {
+    try {
+        const rol = req.body.rol;
+
+        if (!["usuario", "admin"].includes(rol)) {
+            return res.status(400).json({ error: "Rol inválido." });
+        }
+
+        const usuario = await Usuario.findById(req.params.id);
+
+        if (!usuario) {
+            return res.status(404).json({ error: "Usuario no encontrado." });
+        }
+
+        if (usuario.rol === "admin" && rol !== "admin") {
+            const admins = await Usuario.countDocuments({ rol: "admin" });
+
+            if (admins <= 1) {
+                return res.status(409).json({ error: "Debe quedar al menos un administrador." });
+            }
+        }
+
+        usuario.rol = rol;
+        await usuario.save();
+
+        res.json({ ok: true });
+
+    } catch (error) {
+        if (error.name === "CastError") {
+            return res.status(400).json({ error: "Usuario inválido." });
+        }
+        console.error(error);
+        res.status(500).json({ error: "Error del servidor." });
+    }
+});
+
+app.get("/api/ventas", soloAdmin, async (req, res) => {
+    try {
+        const ventas = await Venta.find().sort({ createdAt: -1 }).lean();
+
+        res.json(ventas.map(v => ({
+            id: v._id,
+            usuario: v.usuario,
+            productos: v.productos,
+            total: v.total,
+            createdAt: v.createdAt
+        })));
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error del servidor." });
+    }
+});
+
 app.post("/api/compra", verificarToken, async (req, res) => {
     const items = Array.isArray(req.body.items) ? req.body.items : [];
     const pedido = new Map();
@@ -311,13 +409,20 @@ app.post("/api/compra", verificarToken, async (req, res) => {
     };
 
     try {
+        const comprador = await Usuario.findById(req.usuario.id);
+
+        if (!comprador) {
+            return res.status(401).json({ error: "Usuario no encontrado." });
+        }
+
         for (const [id, cantidad] of pedido) {
-            const ok = await Producto.findOneAndUpdate(
+            // sin { new: true } devuelve el documento ANTES del descuento (nombre y precio vigentes)
+            const antes = await Producto.findOneAndUpdate(
                 { id, stock: { $gte: cantidad } },
                 { $inc: { stock: -cantidad } }
             );
 
-            if (!ok) {
+            if (!antes) {
                 await revertir();
                 const existe = await Producto.findOne({ id });
                 return res.status(409).json({
@@ -327,8 +432,16 @@ app.post("/api/compra", verificarToken, async (req, res) => {
                 });
             }
 
-            descontados.push({ id, cantidad });
+            descontados.push({ id, cantidad, nombre: antes.nombre, precio: antes.precio });
         }
+
+        const total = descontados.reduce((suma, d) => suma + d.precio * d.cantidad, 0);
+
+        await Venta.create({
+            usuario: { nombre: comprador.nombre, email: comprador.email },
+            productos: descontados,
+            total: Math.round(total * 100) / 100
+        });
 
         res.json({ ok: true });
 
