@@ -23,11 +23,13 @@ a {
     color: inherit;
 }
 
-html, body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
+
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 /* =========================================
@@ -1216,7 +1218,7 @@ footer p {
     width: 90%;
     max-width: 400px;
     text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     color: #fff;
     font-family: inherit;
 }
@@ -2215,13 +2217,11 @@ td input {
 
 @media (max-width: 768px) {
 
-    .hero-buttons{
+    .hero-buttons {
         justify-content: center;
         gap: 18px;
     }
 
-    
-    
     .contact-section {
         width: 92%;
         max-width: 100%;
@@ -2237,16 +2237,16 @@ td input {
         box-sizing: border-box;
     }
 
-    
+
     .contact-info {
         width: 100%;
-        padding: 25px 15px; 
+        padding: 25px 15px;
         box-sizing: border-box;
     }
 
     .contact-item {
         width: 100%;
-        padding: 15px 15px; 
+        padding: 15px 15px;
         box-sizing: border-box;
         gap: 12px;
     }
@@ -2298,7 +2298,7 @@ td input {
 
 @media (max-width: 1023px) {
 
-    .header-actions{
+    .header-actions {
         width: 100%;
         justify-content: center;
         margin-top: 8px;

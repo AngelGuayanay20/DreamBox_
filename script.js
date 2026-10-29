@@ -1,6 +1,14 @@
 
 const API_URL = "https://dreambox.onrender.com";
 
+function fetchConTimeout(url, opciones = {}, ms = 60000) {
+    const controlador = new AbortController();
+    const temporizador = setTimeout(() => controlador.abort(), ms);
+
+    return fetch(url, { ...opciones, signal: controlador.signal })
+        .finally(() => clearTimeout(temporizador));
+}
+
 /* =====================================================
    GAMEZONE - PRODUCTOS (CATÁLOGO)
 ===================================================== */
@@ -137,31 +145,46 @@ async function registrarUsuario(event) {
     const password =
         document.getElementById("registro-password").value;
 
-    try {
+    const boton = event.target.querySelector("button[type='submit']");
+    boton.disabled = true;
+    boton.textContent = "Creando cuenta...";
 
-        const respuesta = await fetch(API_URL + "/api/registro", {
+    let respuesta;
+
+    try {
+        respuesta = await fetchConTimeout(API_URL + "/api/registro", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nombre, email, password })
         });
-
-        const data = await respuesta.json();
-
-        if (!respuesta.ok) {
-            await mostrarModal(data.error || "No se pudo crear la cuenta.");
-            return;
-        }
-
-        await mostrarModal("Cuenta creada correctamente. Ahora inicia sesión.");
-
-        window.location.href = "login.html";
-
     } catch (error) {
-
-        await mostrarModal("No se pudo conectar con el servidor.");
-
+        boton.disabled = false;
+        boton.textContent = "Crear cuenta";
+        await mostrarModal(
+            "No se pudo conectar con el servidor. Puede estar despertando; espera unos segundos e inténtalo de nuevo."
+        );
+        return;
     }
 
+    boton.disabled = false;
+    boton.textContent = "Crear cuenta";
+
+    let data = null;
+    try {
+        data = await respuesta.json();
+    } catch (error) {
+        await mostrarModal("El servidor respondió algo inesperado. Inténtalo de nuevo en unos segundos.");
+        return;
+    }
+
+    if (!respuesta.ok) {
+        await mostrarModal(data.error || "No se pudo crear la cuenta.");
+        return;
+    }
+
+    await mostrarModal("Cuenta creada correctamente. Ahora inicia sesión.");
+
+    window.location.href = "login.html";
 }
 
 async function iniciarSesion(event) {
@@ -174,37 +197,48 @@ async function iniciarSesion(event) {
     const password =
         document.getElementById("login-password").value;
 
-    try {
+    const boton = event.target.querySelector("button[type='submit']");
+    boton.disabled = true;
+    boton.textContent = "Conectando...";
 
-        const respuesta = await fetch(API_URL + "/api/login", {
+    let respuesta;
+
+    try {
+        respuesta = await fetchConTimeout(API_URL + "/api/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })
         });
-
-        const data = await respuesta.json();
-
-        if (!usuario) {
-            await mostrarModal("Correo o contraseña incorrectos.");
-            return;
-        }
-
-        localStorage.setItem(
-            "usuarioActual",
-            JSON.stringify(data.usuario)
-        );
-
-        window.location.href =
-            data.usuario.rol === "admin" ? "admin.html" : "index.html";
-
     } catch (error) {
-
-        await mostrarModal("No se pudo conectar con el servidor.");
-
+        boton.disabled = false;
+        boton.textContent = "Iniciar sesión";
+        await mostrarModal(
+            "No se pudo conectar con el servidor. Puede estar despertando; espera unos segundos e inténtalo de nuevo."
+        );
+        return;
     }
 
-}
+    boton.disabled = false;
+    boton.textContent = "Iniciar sesión";
 
+    let data = null;
+    try {
+        data = await respuesta.json();
+    } catch (error) {
+        await mostrarModal("El servidor respondió algo inesperado. Inténtalo de nuevo en unos segundos.");
+        return;
+    }
+
+    if (!respuesta.ok) {
+        await mostrarModal(data.error || "Correo o contraseña incorrectos.");
+        return;
+    }
+
+    localStorage.setItem("usuarioActual", JSON.stringify(data.usuario));
+
+    window.location.href =
+        data.usuario.rol === "admin" ? "admin.html" : "index.html";
+}
 
 async function verificarAdmin() {
 
