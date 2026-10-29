@@ -40,11 +40,30 @@ const Usuario = mongoose.model(
 );
 
 /* ---------- Protección simple para el admin ---------- */
-function soloAdmin(req, res, next) {
-    if (req.headers["x-admin-key"] !== process.env.ADMIN_KEY) {
+
+function verificarToken(req, res, next) {
+    const cabecera = req.headers.authorization || "";
+    const token = cabecera.startsWith("Bearer ") ? cabecera.slice(7) : null;
+
+    if (!token) {
         return res.status(401).json({ error: "No autorizado." });
     }
-    next();
+
+    try {
+        req.usuario = jwt.verify(token, process.env.JWT_SECRET);
+        next();
+    } catch (error) {
+        return res.status(401).json({ error: "Sesión inválida o expirada." });
+    }
+}
+
+function soloAdmin(req, res, next) {
+    verificarToken(req, res, () => {
+        if (req.usuario.rol !== "admin") {
+            return res.status(403).json({ error: "Requiere rol de administrador." });
+        }
+        next();
+    });
 }
 
 /* ---------- Rutas ---------- */
@@ -123,8 +142,15 @@ app.post("/api/login", async (req, res) => {
             return res.status(401).json({ error: "Correo o contraseña incorrectos." });
         }
 
+        const token = jwt.sign(
+            { id: usuario._id, email: usuario.email, rol: usuario.rol },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+
         res.json({
             ok: true,
+            token,
             usuario: {
                 nombre: usuario.nombre,
                 email: usuario.email,
@@ -132,6 +158,23 @@ app.post("/api/login", async (req, res) => {
             }
         });
 
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error del servidor." });
+    }
+});
+
+app.get("/api/yo", verificarToken, async (req, res) => {
+    try {
+        const usuario = await Usuario.findById(req.usuario.id);
+
+        if (!usuario) {
+            return res.status(401).json({ error: "Usuario no encontrado." });
+        }
+
+        res.json({
+            usuario: { nombre: usuario.nombre, email: usuario.email, rol: usuario.rol }
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Error del servidor." });

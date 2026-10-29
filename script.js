@@ -234,6 +234,8 @@ async function iniciarSesion(event) {
         return;
     }
 
+    localStorage.setItem("token", data.token);
+
     localStorage.setItem("usuarioActual", JSON.stringify(data.usuario));
 
     window.location.href =
@@ -242,16 +244,35 @@ async function iniciarSesion(event) {
 
 async function verificarAdmin() {
 
-    const usuario = obtenerUsuarioActual();
+    const token = localStorage.getItem("token");
+    let esAdmin = false;
 
-    if (!usuario || usuario.rol !== "admin") {
+    if (token) {
+        try {
+            const respuesta = await fetchConTimeout(API_URL + "/api/yo", {
+                headers: { "Authorization": "Bearer " + token }
+            });
+
+            if (respuesta.ok) {
+                const data = await respuesta.json();
+                esAdmin = data.usuario.rol === "admin";
+
+                if (esAdmin) {
+                    localStorage.setItem("usuarioActual", JSON.stringify(data.usuario));
+                }
+            }
+        } catch (error) {
+            esAdmin = false;
+        }
+    }
+
+    if (!esAdmin) {
         await mostrarModal("No tienes permisos para acceder al panel de administrador.");
         window.location.href = "index.html";
         return false;
     }
 
     return true;
-
 }
 
 
@@ -1454,7 +1475,7 @@ function cargarCatalogo() {
    INICIALIZACIÓN ADMIN
 ===================================================== */
 
-function inicializarAdmin() {
+async function inicializarAdmin() {
 
     const tablaProductos =
         document.getElementById(
@@ -1465,7 +1486,7 @@ function inicializarAdmin() {
     if (!tablaProductos) return;
 
 
-    if (!verificarAdmin()) return;
+    if (!(await verificarAdmin())) return;
 
 
     cargarAdmin();
@@ -1738,10 +1759,7 @@ async function cerrarSesion() {
     const confirmar = await mostrarModal("¿Seguro que deseas cerrar sesión?", true);
     if (!confirmar) { return; }
 
-    localStorage.removeItem(
-        "usuarioActual"
-    );
-
+  
 
     await mostrarModal("Sesión cerrada correctamente.");
 
@@ -1763,32 +1781,20 @@ async function cargarMensajesAdmin() {
 
     if (!tabla) return;
 
-    let clave = sessionStorage.getItem("adminKey");
-
-    if (!clave) {
-        clave = prompt("Clave de administrador para ver los mensajes:");
-    }
-
-    if (!clave) {
-        tabla.innerHTML = `<tr><td colspan="5" class="empty-table">Ingresa la clave para ver los mensajes.</td></tr>`;
-        return;
-    }
+    const token = localStorage.getItem("token");
 
     try {
 
         const respuesta = await fetch(API_URL + "/api/contacto", {
-            headers: { "x-admin-key": clave }
+            headers: { "Authorization": "Bearer " + token }
         });
 
-        if (respuesta.status === 401) {
-            sessionStorage.removeItem("adminKey");
-            tabla.innerHTML = `<tr><td colspan="5" class="empty-table">Clave incorrecta. Recarga la página para intentarlo de nuevo.</td></tr>`;
+        if (respuesta.status === 401 || respuesta.status === 403) {
+            tabla.innerHTML = `<tr><td colspan="5" class="empty-table">No autorizado. Vuelve a iniciar sesión.</td></tr>`;
             return;
         }
 
         if (!respuesta.ok) throw new Error("Respuesta no válida");
-
-        sessionStorage.setItem("adminKey", clave);
 
         const mensajes = await respuesta.json();
 
