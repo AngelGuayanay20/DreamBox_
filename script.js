@@ -1,4 +1,3 @@
-
 const API_URL = "https://dreambox.onrender.com";
 
 function fetchConTimeout(url, opciones = {}, ms = 60000) {
@@ -1759,7 +1758,8 @@ async function cerrarSesion() {
     const confirmar = await mostrarModal("¿Seguro que deseas cerrar sesión?", true);
     if (!confirmar) { return; }
 
-  
+    localStorage.removeItem("usuarioActual");
+    localStorage.removeItem("token");
 
     await mostrarModal("Sesión cerrada correctamente.");
 
