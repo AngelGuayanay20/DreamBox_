@@ -144,7 +144,7 @@ function soloAdmin(req, res, next) {
 }
 
 /* ---------- Rutas ---------- */
-app.post("/api/contacto", async (req, res) => {
+app.post("/api/contacto", verificarToken, async (req, res) => {
     try {
         const { nombre, email, telefono, mensaje } = req.body;
 

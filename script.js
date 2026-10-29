@@ -1262,6 +1262,12 @@ async function validarFormularioContacto(event) {
 
     event.preventDefault();
 
+    const usuarioSesion = obtenerUsuarioActual();
+    if (!usuarioSesion || !localStorage.getItem("token")) {
+        await mostrarModal("Debes iniciar sesión para enviar un mensaje.");
+        window.location.href = "login.html";
+        return;
+    }
     const nombre = document.getElementById("contact-nombre").value.trim();
     const email = document.getElementById("contact-email").value.trim();
     const telefono = document.getElementById("contact-telefono").value.trim();
@@ -1321,9 +1327,20 @@ async function validarFormularioContacto(event) {
 
         const respuesta = await fetch(API_URL + "/api/contacto", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
             body: JSON.stringify({ nombre, email, telefono, mensaje })
         });
+
+        if (respuesta.status === 401) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("usuarioActual");
+            await mostrarModal("Tu sesión expiró. Inicia sesión de nuevo para enviar el mensaje.");
+            window.location.href = "login.html";
+            return;
+        }
 
         if (!respuesta.ok) throw new Error("Respuesta no válida");
 
