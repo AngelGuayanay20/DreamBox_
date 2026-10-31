@@ -905,6 +905,89 @@ async function cambiarRolAdmin(id, nuevoRol) {
    FINALIZAR COMPRA ACTUALIZADO
 ===================================================== */
 
+function obtenerSubtotalCarrito() {
+    return obtenerCarrito().reduce((s, i) => s + i.precio * i.cantidad, 0);
+}
+
+async function abrirCheckout() {
+
+    const usuario = obtenerUsuarioActual();
+
+    if (!usuario) {
+        await mostrarModal("Debes iniciar sesión para realizar la compra.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    if (obtenerCarrito().length === 0) {
+        await mostrarModal("Tu carrito está vacío.");
+        return;
+    }
+
+    document.getElementById("checkout-nombre").value = usuario.nombre || "";
+    document.getElementById("checkout-email").value = usuario.email || "";
+    document.getElementById("checkout-cupon").value = "";
+    document.getElementById("checkout-error-nombre").textContent = "";
+    document.getElementById("checkout-error-email").textContent = "";
+    document.getElementById("checkout-subtotal").textContent =
+        "$" + obtenerSubtotalCarrito().toFixed(2);
+
+    cerrarCarrito();
+    document.getElementById("checkout-overlay").classList.add("show");
+}
+
+function cerrarCheckout() {
+    const overlay = document.getElementById("checkout-overlay");
+    if (overlay) overlay.classList.remove("show");
+}
+
+async function confirmarCompra(event) {
+
+    event.preventDefault();
+
+    const nombre = document.getElementById("checkout-nombre").value.trim();
+    const email = document.getElementById("checkout-email").value.trim();
+    const cupon = document.getElementById("checkout-cupon").value.trim();
+
+    const errNombre = document.getElementById("checkout-error-nombre");
+    const errEmail = document.getElementById("checkout-error-email");
+    errNombre.textContent = "";
+    errEmail.textContent = "";
+    const metodo = document.getElementById("checkout-metodo").value;
+    
+    let valido = true;
+    if (!metodo) {
+        await mostrarModal("Selecciona un método de pago.");
+        valido = false;
+    }
+
+    if (!nombre) {
+        errNombre.textContent = "El nombre es obligatorio.";
+        valido = false;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errEmail.textContent = "Ingresa un correo válido.";
+        valido = false;
+    }
+
+    if (!valido) return;
+
+    if (cupon) {
+        await mostrarModal("Los cupones todavía no están disponibles. Deja el campo vacío para continuar.");
+        return;
+    }
+
+    const boton = document.getElementById("checkout-confirm-btn");
+    boton.disabled = true;
+    boton.textContent = "Procesando...";
+
+    await finalizarCompra();
+
+    boton.disabled = false;
+    boton.textContent = "Confirmar compra";
+}
+
 async function finalizarCompra() {
 
     const usuario = obtenerUsuarioActual();
@@ -915,14 +998,10 @@ async function finalizarCompra() {
         return;
     }
 
-
     const carrito = obtenerCarrito();
 
-
     if (carrito.length === 0) {
-
         await mostrarModal("Tu carrito está vacío.");
-
         return;
     }
 
@@ -953,32 +1032,22 @@ async function finalizarCompra() {
         return;
     }
 
-    /*
-       VACIAR CARRITO
-    */
-
     localStorage.removeItem("carrito");
 
-
-    await mostrarModal("¡Compra realizada correctamente! 🎮");
-
-
-    cerrarCarrito();
-
+    cerrarCheckout();
     actualizarContadorCarrito();
-
     mostrarCarrito();
 
-
-    /*
-       ACTUALIZAR CATÁLOGO
-    */
+    document.getElementById("gracias-overlay").classList.add("show");
 
     await cargarProductosDesdeAPI();
     cargarCatalogo();
-
 }
 
+function seguirExplorando() {
+    document.getElementById("gracias-overlay").classList.remove("show");
+    window.location.href = "catalogo.html";
+}
 
 /* =====================================================
    CARGAR VENTAS ADMIN
@@ -1374,6 +1443,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     actualizarMenuUsuario();
     inicializarMenuMovil();
     inicializarChatbot();
+
+    document.addEventListener("keydown", e => {
+        if (e.key === "Escape") cerrarCheckout();
+    });
 
     localStorage.removeItem("productos");
 

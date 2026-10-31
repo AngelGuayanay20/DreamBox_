@@ -135,7 +135,7 @@
                 </div>
 
                 <button class="checkout-button" onclick="finalizarCompra()">
-                    Finalizar compra
+                    Proceder al pago
                 </button>
 
             </div>
@@ -143,14 +143,80 @@
         </div>
 
     </div>
-    
+
+    <!-- ================= CHECKOUT ================= -->
+
+    <div class="checkout-overlay" id="checkout-overlay">
+        <div class="checkout-box" role="dialog" aria-modal="true" aria-labelledby="checkout-titulo">
+
+            <div class="checkout-header">
+                <h2 id="checkout-titulo">🛍️ Finalizar Compra</h2>
+                <button type="button" onclick="cerrarCheckout()" aria-label="Cerrar">✕</button>
+            </div>
+
+            <form id="checkout-form" onsubmit="confirmarCompra(event)" novalidate>
+
+                <h3>Datos del Comprador</h3>
+
+                <label for="checkout-nombre">Nombre Completo</label>
+                <input id="checkout-nombre" type="text" placeholder="Ej.Alex Lopez">
+                <span class="form-error" id="checkout-error-nombre"></span>
+
+                <label for="checkout-email">Correo electrónico de contacto</label>
+                <input id="checkout-email" type="email" placeholder="correo@ejemplo.com">
+                <span class="form-error" id="checkout-error-email"></span>
+                <small>Usaremos este correo como dato de contacto. Te enviaremos los recibos por correo.</small>
+
+                <label for="checkout-telefono">Número de teléfono / WhatsApp</label>
+                <input id="checkout-telefono" type="tel" placeholder="Ej. 09xxxxxx37" autocomplete="tel">
+                <span class="form-error" id="checkout-error-telefono"></span>
+
+                <h3>Método de Pago</h3>
+                <label for="checkout-metodo">Selecciona un método de pago</label>
+                <select id="checkout-metodo">
+                    <option value="">-- Selecciona un método --</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="tarjeta">Tarjeta de crédito/débito</option>
+                </select>
+                <span class="form-error" id="checkout-error-metodo"></span>
+
+                <h3>Cupón de descuento</h3>
+                <label for="checkout-cupon">Código (opcional)</label>
+                <input id="checkout-cupon" type="text" placeholder="Ingresa tu código" autocomplete="off">
+                <small>El servidor validará el cupón y calculará el descuento antes del pago.</small>
+
+                <div class="checkout-subtotal">
+                    <span>Subtotal antes del cupón:</span>
+                    <strong id="checkout-subtotal">$0.00</strong>
+                </div>
+
+                <button type="submit" class="checkout-confirm" id="checkout-confirm-btn">Confirmar compra</button>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= GRACIAS POR SU COMPRA ================= -->
+
+    <div class="checkout-overlay" id="gracias-overlay">
+        <div class="checkout-box gracias-box" role="dialog" aria-modal="true">
+            <div class="gracias-icono">🎮</div>
+            <h2>¡Gracias por su compra!</h2>
+            <p>Tu pedido fue registrado correctamente.</p>
+            <div class="gracias-botones">
+                <button type="button" class="btn-seguir" onclick="seguirExplorando()">Seguir explorando</button>
+                <a class="btn-whatsapp" id="btn-whatsapp" target="_blank" rel="noopener"
+                    href="https://wa.me/593967597622">Comunícate con nosotros</a>
+            </div>
+        </div>
+    </div>
+
     <!-- ================= MODAL PERSONALIZADO GLOBAL ================= -->
 
     <div class="custom-modal-overlay" id="custom-modal" style="display: none;">
         <div class="custom-modal-box">
             <p id="custom-modal-mensaje">Mensaje aquí</p>
             <div class="custom-modal-buttons" id="custom-modal-actions">
-                <!-- Los botones se generan dinámicamente -->
             </div>
         </div>
     </div>

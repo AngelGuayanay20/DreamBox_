@@ -1194,6 +1194,205 @@ footer p {
 }
 
 /* =========================================
+   CHECKOUT Y GRACIAS
+========================================= */
+
+.checkout-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000000bf;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    z-index: 3000;
+}
+
+.checkout-overlay.show {
+    display: flex;
+}
+
+.checkout-box {
+    width: 100%;
+    max-width: 440px;
+    max-height: 92vh;
+    overflow-y: auto;
+    background: #12121c;
+    border: 1px solid #292939;
+    border-radius: 14px;
+    padding: 26px;
+}
+
+.checkout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid #292939;
+}
+
+.checkout-header button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#checkout-form h3 {
+    font-size: 15px;
+    margin-top: 14px;
+}
+
+#checkout-form label {
+    color: #ccccd5;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 6px;
+}
+
+#checkout-form input {
+    padding: 13px;
+    background: #0d0d15;
+    border: 1px solid #303044;
+    color: white;
+    border-radius: 8px;
+    outline: none;
+}
+
+#checkout-form input:focus {
+    border-color: var(--purple);
+}
+
+#checkout-form small {
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.4;
+}
+
+#checkout-form select {
+    width: 100%;
+    padding: 13px 42px 13px 13px;
+    background-color: #0d0d15;
+    color: white;
+    border: 1px solid #303044;
+    border-radius: 8px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.25s;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+#checkout-form select:hover {
+    border-color: #4a4a66;
+}
+
+#checkout-form select:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px #a855f71a;
+}
+
+#checkout-form select option {
+    background: #12121c;
+    color: #fff;
+}
+
+.checkout-subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0d0d15;
+    border: 1px solid #303044;
+    border-radius: 10px;
+    padding: 18px;
+    margin-top: 14px;
+    color: var(--muted);
+}
+
+.checkout-subtotal strong {
+    color: var(--purple);
+    font-size: 22px;
+}
+
+.checkout-confirm {
+    margin-top: 14px;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: var(--lime);
+    color: #0a0a12;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.checkout-confirm:disabled {
+    opacity: .5;
+    cursor: wait;
+}
+
+.gracias-box {
+    text-align: center;
+    max-width: 400px;
+}
+
+.gracias-icono {
+    font-size: 44px;
+    margin-bottom: 10px;
+}
+
+.gracias-box h2 {
+    margin-bottom: 8px;
+}
+
+.gracias-box p {
+    color: var(--muted);
+    margin-bottom: 22px;
+}
+
+.gracias-botones {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-seguir,
+.btn-whatsapp {
+    flex: 1 1 150px;
+    padding: 13px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+}
+
+.btn-seguir {
+    background: #2a2a3c;
+    color: #fff;
+}
+
+.btn-whatsapp {
+    background: var(--lime3);
+    color: #fff;
+}
+
+.btn-whatsapp:hover {
+    background: #1ebe5a;
+}
+
+/* =========================================
    Ventana modal personalizada
 ========================================= */
 
