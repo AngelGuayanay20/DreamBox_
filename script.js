@@ -929,11 +929,14 @@ async function abrirCheckout() {
     document.getElementById("checkout-cupon").value = "";
     document.getElementById("checkout-error-nombre").textContent = "";
     document.getElementById("checkout-error-email").textContent = "";
+    document.getElementById("checkout-telefono").value = "";
+    document.getElementById("checkout-error-telefono").textContent = "";
     document.getElementById("checkout-subtotal").textContent =
         "$" + obtenerSubtotalCarrito().toFixed(2);
 
     cerrarCarrito();
     document.getElementById("checkout-overlay").classList.add("show");
+
 }
 
 function cerrarCheckout() {
@@ -948,13 +951,16 @@ async function confirmarCompra(event) {
     const nombre = document.getElementById("checkout-nombre").value.trim();
     const email = document.getElementById("checkout-email").value.trim();
     const cupon = document.getElementById("checkout-cupon").value.trim();
+    const telefono = document.getElementById("checkout-telefono").value.trim();
 
     const errNombre = document.getElementById("checkout-error-nombre");
     const errEmail = document.getElementById("checkout-error-email");
+    const errTelefono = document.getElementById("checkout-error-telefono");
+    errTelefono.textContent = "";
     errNombre.textContent = "";
     errEmail.textContent = "";
     const metodo = document.getElementById("checkout-metodo").value;
-    
+
     let valido = true;
     if (!metodo) {
         await mostrarModal("Selecciona un método de pago.");
@@ -968,6 +974,11 @@ async function confirmarCompra(event) {
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         errEmail.textContent = "Ingresa un correo válido.";
+        valido = false;
+    }
+
+    if (!/^[0-9+\s-]{7,15}$/.test(telefono)) {
+        errTelefono.textContent = "Ingresa un teléfono válido (7 a 15 dígitos).";
         valido = false;
     }
 
