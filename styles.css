@@ -1223,6 +1223,15 @@ footer p {
     padding: 26px;
 }
 
+.checkout-box {
+    scrollbar-width: none;    
+    -ms-overflow-style: none;   
+}
+
+.checkout-box::-webkit-scrollbar {
+    display: none;       
+}
+
 .checkout-header {
     display: flex;
     justify-content: space-between;
