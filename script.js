@@ -977,8 +977,8 @@ async function confirmarCompra(event) {
         valido = false;
     }
 
-    if (!/^[0-9+\s-]{7,15}$/.test(telefono)) {
-        errTelefono.textContent = "Ingresa un teléfono válido (7 a 15 dígitos).";
+    if (!/^[0-9+\s-]{10,15}$/.test(telefono)) {
+        errTelefono.textContent = "Ingresa un teléfono válido";
         valido = false;
     }
 
