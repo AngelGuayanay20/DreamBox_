@@ -1141,6 +1141,29 @@ footer p {
     cursor: pointer;
 }
 
+.quantity-input {
+    width: 52px;
+    height: 26px;
+    text-align: center;
+    background: #0d0d15;
+    color: white;
+    border: 1px solid #303044;
+    border-radius: 4px;
+    outline: none;
+    font-size: 14px;
+    -moz-appearance: textfield;
+}
+
+.quantity-input:focus {
+    border-color: var(--purple);
+}
+
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .remove-button {
     margin-top: 10px;
 

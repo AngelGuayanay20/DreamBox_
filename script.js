@@ -371,7 +371,15 @@ function mostrarCarrito() {
                     <span class="cart-item-price">$${(item.precio * item.cantidad).toFixed(2)}</span>
                     <div class="quantity">
                         <button onclick="cambiarCantidadCarrito('${item.id}', -1)">−</button>
-                        <span>${item.cantidad}</span>
+                        <input
+                            type="number"
+                            class="quantity-input"
+                            min="1" 
+                            max="99"
+                            value="${item.cantidad}"
+                            onchange="establecerCantidadCarrito('${item.id}', this.value)"
+                            aria-label="Cantidad"
+                        >
                         <button onclick="cambiarCantidadCarrito('${item.id}', 1)">+</button>
                     </div>
                     <button class="remove-button" onclick="eliminarDelCarrito('${item.id}')">Eliminar</button>
@@ -410,6 +418,42 @@ function cambiarCantidadCarrito(id, delta) {
 
 }
 
+async function establecerCantidadCarrito(id, valor) {
+
+    const carrito = obtenerCarrito();
+
+    const item = carrito.find(p => String(p.id) === String(id));
+
+    if (!item) return;
+
+    let cantidad = parseInt(valor, 10);
+
+    if (isNaN(cantidad) || cantidad < 1) cantidad = 1;
+    
+    if (cantidad > 99) cantidad = 99;
+
+    const producto = obtenerProductos().find(p => String(p.id) === String(item.id));
+
+    let avisarStock = false;
+
+    if (producto && Number(producto.stock) > 0 && cantidad > Number(producto.stock)) {
+        cantidad = Number(producto.stock);
+        avisarStock = true;
+    }
+
+    item.cantidad = cantidad;
+
+    guardarCarrito(carrito);
+
+    actualizarContadorCarrito();
+
+    mostrarCarrito();
+
+    if (avisarStock) {
+        await mostrarModal("Solo hay " + cantidad + " unidades disponibles de " + item.nombre + ".");
+    }
+
+}
 
 function abrirCarrito() {
 
