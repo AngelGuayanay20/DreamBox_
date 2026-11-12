@@ -96,8 +96,8 @@ Este repositorio contiene el **sitio web de DreamBox**, que incluye:
 
 | Tecnología | Uso |
 |---|---|
-| [HTML5](https://developer.mozilla.org/es/docs/Web/HTML) | Estructura de las páginas |
-| [CSS3](https://developer.mozilla.org/es/docs/Web/CSS) | Estilos, variables CSS, Grid, Flexbox y diseño responsive (`styles.css`) |
+| [HTML](https://developer.mozilla.org/es/docs/Web/HTML) | Estructura de las páginas |
+| [CSS](https://developer.mozilla.org/es/docs/Web/CSS) | Estilos, variables CSS, Grid, Flexbox y diseño responsive (`styles.css`) |
 | [JavaScript (vanilla)](https://developer.mozilla.org/es/docs/Web/JavaScript) | Lógica del cliente, consumo de la API con `fetch` (`script.js`) |
 
 > No se utiliza ningún framework ni biblioteca de frontend.
