@@ -359,7 +359,6 @@ Para ser transparentes sobre el estado actual del proyecto:
 - 📧 El checkout indica que se enviarán recibos por correo, pero el código no incluye envío de correos.
 - 🔗 Los enlaces de Instagram, Facebook y TikTok del pie de contacto están como marcadores (`#`).
 - 🧪 El proyecto no incluye pruebas automatizadas ni un script de desarrollo (solo `npm start`).
-- 📄 No se encontró un archivo `LICENSE` en el repositorio (ver [Licencia](#-licencia)).
 
 ---
 
