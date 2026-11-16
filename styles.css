@@ -1151,7 +1151,6 @@ footer p {
     border-radius: 4px;
     outline: none;
     font-size: 14px;
-    -moz-appearance: textfield;
 }
 
 .quantity-input:focus {
