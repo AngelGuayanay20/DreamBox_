@@ -129,15 +129,15 @@ Este repositorio contiene el **sitio web de DreamBox**, que incluye:
 
 | Inicio | Catálogo |
 |---|---|
-| ![Inicio](/assets/screenshots/Inicio.png) | ![Catálogo](/assets/screenshots/Catalogo.png) |
+| ![Inicio](/frontend/public/assets/screenshots/Inicio.png) | ![Catálogo](/frontend/public/assets/screenshots/Catalogo.png) |
 
 | Detalle de videojuego | Carrito y checkout |
 |---|---|
-| ![Detalle](/assets/screenshots/Detalle.png) | ![Checkout](/assets/screenshots/Carrito-Checkout.png )|
+| ![Detalle](/frontend/public/assets/screenshots/Detalle.png) | ![Checkout](/frontend/public/assets/screenshots/Carrito-Checkout.png)|
 
 | Panel de administración | DreamBot |
 |---|---|
-| ![Admin](/assets/screenshots/Admin.png) | ![DreamBot](/assets/screenshots/DreamBot.png) |
+| ![Admin](/frontend/public/assets/screenshots/Admin.png) | ![DreamBot](/frontend/public/assets/screenshots/DreamBot.png) |
 
 ---
 
