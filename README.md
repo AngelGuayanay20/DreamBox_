@@ -1,35 +1,37 @@
 <div align="center">
-🎮 DreamBox
+
+# 🎮 DreamBox
 
 **La cabina portátil con IA que crea videojuegos únicos para ti**
 
-![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+[![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/es/docs/Web/HTML)
+[![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/es/docs/Web/CSS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/es/docs/Web/JavaScript)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 
 </div>
 
 ---
 
-## 📑 Tabla de contenidos
+## 📑 Tabla de contenido
 
-1. [Descripción general](#-descripción-general)
-2. [Características principales](#-características-principales)
-3. [Tecnologías utilizadas](#-tecnologías-utilizadas)
-4. [Vista previa](#-vista-previa)
-5. [Estructura del proyecto](#-estructura-del-proyecto)
-6. [Instalación y configuración](#-instalación-y-configuración)
-7. [Variables de entorno](#-variables-de-entorno)
-8. [Base de datos](#-base-de-datos)
-9. [API REST](#-api-rest)
-10. [Uso del proyecto](#-uso-del-proyecto)
-11. [Despliegue](#-despliegue)
-12. [Limitaciones conocidas](#-limitaciones-conocidas)
-13. [Autor](#-autor)
+
+- [📖 Descripción general](#-descripción-general)
+- [✨ Características principales](#-características-principales)
+- [🧰 Tecnologías utilizadas](#-tecnologías-utilizadas)
+- [🖼️ Vista previa](#️-vista-previa)
+- [📁 Estructura del proyecto](#-estructura-del-proyecto)
+- [🚀 Instalación y configuración](#-instalación-y-configuración)
+- [🔑 Variables de entorno](#-variables-de-entorno)
+- [🗄️ Base de datos](#️-base-de-datos)
+- [🔌 API REST](#-api-rest)
+- [🕹️ Uso del proyecto](#️-uso-del-proyecto)
+- [☁️ Despliegue](#️-despliegue)
+- [⚠️ Limitaciones conocidas](#️-limitaciones-conocidas)
+- [👤 Autor](#-autor)
 
 ---
 
@@ -37,56 +39,157 @@
 
 **DreamBox** es una cabina portátil de videojuegos con inteligencia artificial, diseñada para ofrecer experiencias de entretenimiento inmersivas y personalizadas.
 
+El proyecto busca combinar videojuegos, tecnología e inteligencia artificial dentro de una experiencia accesible y personalizada para los usuarios.
+
 Muchas personas quieren vivir experiencias de videojuegos más inmersivas y personalizadas, pero no tienen acceso a equipos costosos o a juegos que se adapten a sus gustos. DreamBox propone una cabina portátil que combina inmersión total e IA para que cualquiera pueda vivir esa experiencia.
 
-Este repositorio contiene el **sitio web de DreamBox**, que incluye:
+Este repositorio contiene el desarrollo web de DreamBox y está dividido principalmente en un **frontend** y un **backend**. El frontend proporciona la interfaz con la que interactúa el usuario, mientras que el backend proporciona una API REST encargada de la lógica del sistema y la comunicación con la base de datos.
 
-- Una página de presentación del producto.
-- Una **tienda de videojuegos** (PC, PlayStation, Xbox y Nintendo) con carrito y proceso de compra.
-- Un sistema de **registro e inicio de sesión** de usuarios.
-- Un **panel de administración**.
-- Un **asistente virtual (DreamBot)** que recomienda juegos del catálogo.
-- Un **formulario de contacto**.
-- Una **API REST** en Node.js que conecta todo con una base de datos MongoDB.
+### 🎯 Objetivo
+
+DreamBox busca ofrecer una experiencia de videojuegos más personalizada mediante:
+
+- Una tienda de videojuegos.
+- Gestión de usuarios.
+- Sistema de autenticación.
+- Administración de productos e inventario.
+- Registro de ventas.
+- Formulario de contacto.
+- Un asistente virtual llamado **DreamBot**.
+- Integración con inteligencia artificial.
+- Persistencia de información mediante MongoDB.
 
 ---
 
 ## ✨ Características principales
 
-### 🛍️ Tienda
-- Catálogo de videojuegos cargado desde la API, con **buscador por nombre**.
-- **Filtros por plataforma**: Todos, PC, PlayStation, Xbox y Nintendo (también mediante la URL, por ejemplo `catalogo.html?plataforma=PC`).
-- **Página de detalle** de cada videojuego (`detalle.html?id=<id>`) con descripción, género, precio y stock.
-- Indicador de **stock** y botón deshabilitado cuando el producto está agotado.
-- **Carrito de compras** (panel lateral) con cambio de cantidades, eliminación de productos, contador y total. Se conserva en el `localStorage` del navegador.
-- **Proceso de compra** (checkout) con validación de nombre, correo, teléfono y selección de método de pago, y ventana de agradecimiento con acceso a WhatsApp.
+### 🛍️ Tienda de videojuegos
 
-### 🔐 Cuentas de usuario
-- **Registro** (nombre, correo y contraseña de mínimo 6 caracteres) e **inicio de sesión**.
-- Contraseñas cifradas con **bcrypt** y sesiones mediante **JSON Web Tokens (JWT)** con duración de 7 días.
-- Botón para mostrar u ocultar la contraseña.
-- Menú de usuario con nombre, **cierre de sesión** con confirmación y acceso al panel de administrador (solo para administradores).
-- Roles: `usuario` y `admin`.
+El sistema incluye un catálogo de videojuegos que permite:
 
-### 👑 Panel de administración (`admin.html`)
-- **Estadísticas**: videojuegos, clientes, ventas, stock total y dinero vendido.
-- **Gestión de inventario**: agregar, editar y eliminar videojuegos, y modificar el stock directamente en la tabla.
-- **Usuarios registrados**: listado y cambio de rol (el servidor impide dejar al sistema sin administradores).
-- **Ventas realizadas**: cliente, correo, productos, total y fecha.
-- **Mensajes de contacto** recibidos desde el formulario del sitio.
-- Acceso protegido: se verifica el rol en el servidor antes de mostrar el panel.
+- Consultar los videojuegos disponibles.
+- Buscar productos por nombre.
+- Filtrar videojuegos por plataforma.
+- Consultar información detallada de cada videojuego.
+- Visualizar precio y stock.
+- Agregar productos al carrito.
+- Modificar cantidades.
+- Eliminar productos del carrito.
+- Consultar el total de la compra.
+- Realizar el proceso de checkout.
+
+Las plataformas contempladas incluyen:
+
+- 🖥️ PC
+- 🎮 PlayStation
+- 🟢 Xbox
+- 🔴 Nintendo
+
+---
+
+### 🛒 Carrito de compras
+
+El carrito permite administrar los productos seleccionados antes de realizar una compra.
+
+Entre sus funciones se encuentran:
+
+- Agregar videojuegos.
+- Incrementar o disminuir cantidades.
+- Eliminar productos.
+- Mostrar cantidad total de productos.
+- Calcular el importe de la compra.
+- Mantener el carrito mediante `localStorage`.
+
+---
+
+### 🔐 Registro e inicio de sesión
+
+DreamBox incorpora un sistema de cuentas de usuario.
+
+Los usuarios pueden:
+
+- Crear una cuenta.
+- Iniciar sesión.
+- Mantener una sesión mediante JWT.
+- Cerrar sesión.
+- Consultar su información.
+- Acceder a funcionalidades protegidas.
+
+Las contraseñas se almacenan cifradas mediante `hash` utilizando `bcryptjs`.
+
+El sistema contempla dos roles:
+
+| Rol | Descripción |
+|---|---|
+| `usuario` | Usuario normal del sistema |
+| `admin` | Usuario con permisos administrativos |
+
+---
+
+### 👑 Panel de administración
+
+Los usuarios administradores disponen de funcionalidades para administrar diferentes elementos del sistema.
+
+El panel permite:
+
+- **Consultar estadísticas como :** Videojuegos, clientes, ventas, stock total y dinero vendido.
+- Gestionar videojuegos.
+- Agregar productos.
+- Editar productos.
+- Eliminar productos.
+- Modificar stock.
+- **Consultar usuarios registrados :** Listado de personas registradas.
+- **Cambiar roles:** Entre `admin` y `usuario`.
+- **Consultar ventas:** cliente, correo, productos, total y fecha.
+- Consultar mensajes recibidos mediante el formulario de contacto.
+
+El acceso al panel está protegido mediante autenticación y autorización basada en roles.
+
+---
 
 ### 🤖 DreamBot (asistente con IA)
-- Widget de chat flotante disponible en las páginas del sitio.
-- Recomienda videojuegos **únicamente del catálogo existente**, usando la API de Groq desde el servidor (la clave nunca llega al navegador).
-- Límite simple de un mensaje cada 2 segundos por IP.
 
-### 🌐 Sitio web
-- Página de inicio con secciones: *hero*, características, experiencias, vista de la tienda y contacto.
-- **Formulario de contacto** con validación (requiere haber iniciado sesión); los mensajes se guardan en la base de datos.
-- Diseño **responsive** con menú hamburguesa para pantallas menores a 1024 px.
-- Ventanas modales personalizadas (reemplazan a `alert` y `confirm`).
-- Etiquetas *Open Graph* y *Twitter Card* para compartir el sitio en redes y WhatsApp.
+DreamBot es el asistente virtual de DreamBox.
+
+Su función principal es ayudar al usuario a encontrar videojuegos del catálogo mediante inteligencia artificial.
+
+El sistema utiliza la API de Groq desde el servidor del backend, evitando exponer directamente la clave de acceso en el navegador.
+
+DreamBot está diseñado para recomendar videojuegos que formen parte del catálogo disponible.
+
+---
+
+### 📩 Formulario de contacto
+
+El sitio incorpora un formulario de contacto mediante el cual los usuarios pueden enviar mensajes.
+
+La información enviada se procesa mediante la API y se almacena en MongoDB.
+
+El panel administrativo permite posteriormente consultar los mensajes recibidos.
+
+---
+
+### 📱 Diseño responsive
+
+La interfaz está diseñada para adaptarse a diferentes tamaños de pantalla.
+
+Incluye elementos como:
+
+- Menú responsive.
+- Menú hamburguesa para pantallas pequeñas.
+- Diseño adaptable.
+- Componentes visuales optimizados para diferentes dispositivos.
+
+---
+
+### 🌐 Integración para redes sociales
+
+El sitio incorpora metadatos para mejorar la forma en que DreamBox se presenta cuando se comparte en plataformas compatibles.
+
+Entre ellos se incluyen:
+
+- Open Graph.
+- Twitter Cards.
 
 ---
 
@@ -99,87 +202,126 @@ Este repositorio contiene el **sitio web de DreamBox**, que incluye:
 | [HTML](https://developer.mozilla.org/es/docs/Web/HTML) | Estructura de las páginas |
 | [CSS](https://developer.mozilla.org/es/docs/Web/CSS) | Estilos, variables CSS, Grid, Flexbox y diseño responsive (`styles.css`) |
 | [JavaScript (vanilla)](https://developer.mozilla.org/es/docs/Web/JavaScript) | Lógica del cliente, consumo de la API con `fetch` (`script.js`) |
+| Fetch API | Comunicación con el backend |
+| LocalStorage | Persistencia del carrito en el navegador |
 
 > No se utiliza ningún framework ni biblioteca de frontend.
+
+
+---
 
 ### Backend
 
 | Tecnología | Versión | Uso |
 |---|---|---|
-| [Node.js](https://nodejs.org/es) | ≥ 20.19.0 (requisito de Mongoose 9) | Entorno de ejecución |
+| [Node.js](https://nodejs.org/es) | ≥ v26.13.1 (requisito de Mongoose 9) | Entorno de ejecución |
 | [Express](https://expressjs.com/es/) | ^5.3.0 | Servidor y rutas de la API |
 | [Mongoose](https://mongoosejs.com/) | ^9.11.2 | Modelado y acceso a MongoDB |
 | [bcryptjs](https://github.com/dcodeIO/bcrypt.js) | ^3.0.3 | Cifrado de contraseñas |
 | [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) | ^9.0.3 | Autenticación con JWT |
 | [cors](https://github.com/expressjs/cors) | ^2.8.6 | Control de orígenes permitidos |
 | [dotenv](https://github.com/motdotla/dotenv) | ^18.0.8 | Variables de entorno |
+---
 
-### Base de datos y servicios externos
+### Base de datos y servicios
 
-| Servicio | Uso |
+| Servicio | Función |
 |---|---|
-| [MongoDB](https://www.mongodb.com/) | Base de datos (usuarios, productos, ventas y mensajes) |
-| [Groq API](https://console.groq.com/docs) | Modelo de lenguaje del asistente DreamBot (endpoint `chat/completions`) |
-| [Render](https://render.com/) | Alojamiento de la API (`https://dreambox.onrender.com`) |
-| [WhatsApp](https://faq.whatsapp.com/5913398998672934) | Enlace de contacto (`wa.me`) |
+| [MongoDB](https://www.mongodb.com/) | **Base de Datos :** Almacenamiento de usuarios, productos, ventas y contactos |
+| [Groq API](https://console.groq.com/docs)| **Inteligencia Artificial:** Modelo de Lenguaje utilizado por el Asistente Inteligente `DreamBot` |
+| [Render](https://render.com/) | Alojamiento de la API y el Backend (`https://dreambox.onrender.com`) |
+| [GitHub Pages](https://github.com/?locale=es-419) | Publicación del frontend |
+| [WhatsApp](https://faq.whatsapp.com/5913398998672934) | Enlace y Canal de contacto utilizado por el proyecto (`wa.me`) | 
 
 ---
 
 ## 🖼️ Vista previa
 
-| Inicio | Catálogo |
-|---|---|
-| ![Inicio](/frontend/public/assets/screenshots/Inicio.png) | ![Catálogo](/frontend/public/assets/screenshots/Catalogo.png) |
+### 🏠 Página de inicio
 
-| Detalle de videojuego | Carrito y checkout |
-|---|---|
-| ![Detalle](/frontend/public/assets/screenshots/Detalle.png) | ![Checkout](/frontend/public/assets/screenshots/Carrito-Checkout.png)|
+![Inicio](frontend/public/assets/screenshots/Inicio.png)
 
-| Panel de administración | DreamBot |
-|---|---|
-| ![Admin](/frontend/public/assets/screenshots/Admin.png) | ![DreamBot](/frontend/public/assets/screenshots/DreamBot.png) |
+### 🛍️ Catálogo
+
+![Catálogo](frontend/public/assets/screenshots/Catalogo.png)
+
+### 🎮 Detalle del videojuego
+
+![Detalle del videojuego](frontend/public/assets/screenshots/Detalle.png)
+
+### 🛒 Carrito y checkout
+
+![Carrito y checkout](frontend/public/assets/screenshots/Carrito-Checkout.png)
+
+### 👑 Panel de administración
+
+![Panel de administración](frontend/public/assets/screenshots/Admin.png)
+
+### 🤖 DreamBot
+
+![DreamBot](frontend/public/assets/screenshots/DreamBot.png)
 
 ---
 
 ## 📁 Estructura del proyecto
 
-```
+La estructura actual del repositorio se organiza principalmente en dos partes: `frontend` y `backend`.
+
+```text 
 DreamBox_/
-├── assets/              # Imágenes del sitio (cabina, favicon, imagen para redes, juegos catalogo , capturas de pantalla)
-├── index.html           # Página de inicio (hero, características, tienda, contacto)
-├── catalogo.html        # Catálogo completo con buscador y filtros
-├── detalle.html         # Detalle de un videojuego
-├── login.html           # Inicio de sesión
-├── registro.html        # Creación de cuenta
-├── admin.html           # Panel de administración
-├── styles.css           # Estilos de todo el sitio
-├── script.js            # Lógica del cliente (carrito, sesión, catálogo, admin, chatbot)
-├── server.js            # API REST (Express + Mongoose)
-├── package.json         # Dependencias y script de inicio
-├── package-lock.json    # Versiones exactas de dependencias
-└── .gitignore           # Excluye .env y node_modules/
+│
+├── .github/
+│   └── workflows/
+│       └── deploy.yml          # Configuración de GitHub Actions
+│
+├── backend/
+│   ├── node_modules/           # Dependencias del servidor (Ignorado por .gitignore)
+│   ├── .env                    # Variables de entorno (Ignorado por .gitignore)
+│   ├── package-lock.json       # Versiones bloqueadas
+│   ├── package.json            # Dependencias y scripts
+│   └── server.js               # Servidor y API REST
+│
+├── frontend/
+│   ├── node_modules/           # Dependencias del cliente (Ignorado por .gitignore)
+│   ├── public/
+│   │   └── assets/             # Imágenes del sitio (cabina, favicon, imagen para redes, juegos catalogo , capturas de pantalla)
+│   ├── src/
+│   │   ├── components/         # Componentes de React
+│   │   ├── context/            # Contextos globales
+│   │   ├── pages/              # Vistas de la aplicación
+│   │   ├── services/           # Conexión con la API
+│   │   ├── styles/             # Estilos globales
+│   │   ├── utils/              # Funciones auxiliares
+│   │   ├── App.jsx             # Componente principal
+│   │   └── main.jsx            # Punto de entrada
+│   ├── .env                    # Ejemplo de variables de entorno
+│   ├── index.html              # Plantilla HTML
+│   ├── package-lock.json       # Versiones bloqueadas del frontend
+│   ├── package.json            # Dependencias del frontend
+│   └── vite.config.js          # Configuración de Vite
+│
+├── .gitignore                  # Archivos excluidos de Git (Excluye .env y node_modules/)
+└── README.md                   # Documentación del proyecto
+
 ```
 
-| Archivo | Descripción |
-|---|---|
-| `server.js` | Define los modelos (`Contacto`, `Usuario`, `Producto`, `Venta`), los *middlewares* de autenticación (`verificarToken`, `soloAdmin`), todas las rutas `/api/*`, la siembra inicial de productos y el arranque del servidor. |
-| `script.js` | Contiene `API_URL`, la comunicación con la API, el carrito, el checkout, el catálogo, los filtros, el panel admin, la validación del formulario de contacto, el menú móvil y el chatbot. |
-| `styles.css` | Variables de color, componentes y *media queries* responsive. |
-| `aseets/` | Variables de color, componentes y *media queries* responsive. |
-
+> La estructura anterior representa la organización principal visible actualmente en el repositorio. Los archivos internos adicionales pueden cambiar a medida que el proyecto evolucione.
 
 ---
 
 ## 🚀 Instalación y configuración
 
-El proyecto se divide en dos partes que se ejecutan por separado: la **API** (Node.js) y el **frontend** (archivos estáticos).
+### 📋 Requisitos previos
 
-### Requisitos previos
+Antes de instalar DreamBox necesitas disponer de:
 
-- [Node.js](https://nodejs.org/es) **20.19.0 o superior**
-- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/) **20.19.0 o superior**  instalado.
+- [Git](https://git-scm.com/) instalado.
 - Una base de datos MongoDB (por ejemplo, un clúster gratuito en [MongoDB Atlas](https://www.mongodb.com/atlas) o una instancia local)
-- (Opcional) Una clave de API de [Groq](https://console.groq.com/) para el asistente DreamBot
+- Una cuenta/configuración de Groq si se desea utilizar DreamBot.
+- Un editor de código, como Visual Studio Code.
+
+---
 
 ### 1. Clonar el repositorio
 
@@ -188,59 +330,46 @@ git clone https://github.com/AngelGuayanay20/DreamBox_.git
 cd DreamBox_
 ```
 
-### 2. Instalar dependencias
+---
+
+### 2. Instalar las dependencias del backend
+
+Accede a la carpeta correspondiente:
+
+```bash
+cd backend
+```
+
+Después instala las dependencias:
 
 ```bash
 npm install
 ```
 
-### 3. Configurar las variables de entorno
-
-Crea un archivo `.env` en la raíz del proyecto (ya está ignorado por Git). Consulta la sección [Variables de entorno](#-variables-de-entorno).
-
-### 4. Iniciar la API
-
-```bash
-npm start
-```
-
-Si todo es correcto verás en consola: `API lista en el puerto 3001` (o el puerto que hayas definido).
-
-### 5. Apuntar el frontend a tu API local
-
-En la **primera línea de `script.js`** la URL de la API está fijada a la versión desplegada:
-
-```js
-const API_URL = "https://dreambox.onrender.com";
-```
-
-Para trabajar en local, cámbiala por:
-
-```js
-const API_URL = "http://localhost:3001";
-```
-
-### 6. Servir el frontend
-
-El servidor `server.js` **solo expone la API**; no sirve los archivos HTML. Abre el frontend con cualquier servidor de archivos estáticos, por ejemplo la extensión **Live Server** de VS Code (normalmente en `http://127.0.0.1:5500`).
-
-> ⚠️ Si defines `ALLOWED_ORIGINS`, incluye exactamente el origen desde el que abres el frontend (por ejemplo `http://127.0.0.1:5500`, sin barra final).
-
 ---
 
-## 🔑 Variables de entorno
+### 3. Configurar las variables de entorno
 
-Crea un archivo `.env` en la raíz con el siguiente formato. **Nunca subas este archivo al repositorio ni compartas sus valores.**
+Crea un archivo `.env` dentro de la carpeta `backend`.
+
+Ejemplo:
 
 ```env
-MONGODB_URI=tu_cadena_de_conexion_de_mongodb
-JWT_SECRET=una_cadena_larga_y_aleatoria
-ADMIN_EMAIL=correo_del_administrador@ejemplo.com
+MONGODB_URI=tu_cadena_de_conexion
+JWT_SECRET=tu_secreto_seguro
+ADMIN_EMAIL=correo_del_administrador
 ALLOWED_ORIGINS=http://127.0.0.1:5500
 AI_API_KEY=tu_clave_de_groq
-AI_MODEL=identificador_del_modelo_de_groq
+AI_MODEL=tu_modelo_de_groq
 PORT=3001
 ```
+
+**No compartas ni publiques los valores reales de estas variables.**
+## 🔑 Variables de entorno
+
+Las variables de entorno permiten configurar el backend sin incluir información sensible directamente en el código.
+
+### Variables principales
 
 | Variable | Obligatoria | Descripción |
 |---|:---:|---|
@@ -252,22 +381,125 @@ PORT=3001
 | `AI_MODEL` | ❌ (Requerida para DreamBot) | Identificador del modelo de Groq a utilizar. El repositorio no fija un modelo; elige uno disponible en tu cuenta de Groq. |
 | `PORT` | ➖ (Depende si se usa en otro lado ) | Puerto del servidor. Por defecto `3001`. |
 
+\* Son necesarias si se desea utilizar la funcionalidad de DreamBot.
+
+### ⚠️ Seguridad
+
+Nunca debes subir al repositorio:
+
+```text
+.env 
+node_module/   (Pesa mucho y es innecesario)
+```
+
+Ni incluir directamente en el código:
+
+- Contraseñas.
+- Claves API.
+- Tokens.
+- Cadenas privadas de conexión.
+- Secretos JWT.
+---
+
+### 4. Iniciar el backend
+
+Desde la carpeta `backend`:
+
+```bash
+npm start
+```
+Si 
+todo es correcto verás en consola: `API lista en el puerto 3001` (o el puerto que hayas definido en `PORT`).
+
+---
+
+### 5. Ejecutar el frontend
+
+El frontend está compuesto por archivos estáticos HTML, CSS y JavaScript.
+
+Puedes ejecutarlo utilizando un servidor local, por ejemplo mediante **Live Server** en Visual Studio Code.
+
+La dirección local dependerá de la herramienta utilizada, por ejemplo:
+
+```text
+http://127.0.0.1:5500
+```
+
+> ⚠️ Si defines `ALLOWED_ORIGINS`, incluye exactamente el origen desde el que abres el frontend (por ejemplo `http://127.0.0.1:5500`, sin barra final).
+---
+
+
+
 ---
 
 ## 🗄️ Base de datos
 
-DreamBox usa **MongoDB** a través de **Mongoose**. La conexión se abre al iniciar el servidor con `MONGODB_URI` y, una vez conectada, se ejecuta la siembra inicial de productos.
+DreamBox utiliza **MongoDB** como sistema de gestión de base de datos y **Mongoose** para trabajar con los modelos desde Node.js.
 
-### Colecciones (modelos)
+La conexión se configura mediante:
 
-| Modelo | Campos principales |
-|---|---|
-| **Usuario** | `nombre`, `email` (único, en minúsculas), `passwordHash`, `rol` (`usuario` \| `admin`) |
-| **Producto** | `id` (numérico, único), `nombre`, `precio`, `stock`, `plataforma` (arreglo), `genero`, `imagen`, `descripcion` |
-| **Venta** | `usuario` (`nombre`, `email`), `productos` (`id`, `nombre`, `precio`, `cantidad`), `total` |
-| **Contacto** | `nombre`, `email`, `telefono`, `mensaje`, `leido` |
+```env
+MONGODB_URI=tu_cadena_de_conexion
+```
 
-Todos los modelos incluyen `createdAt` y `updatedAt` automáticos.
+### 📦 Datos administrados
+
+El sistema maneja información relacionada con:
+
+- Usuarios.
+- Productos.
+- Ventas.
+- Mensajes de contacto.
+
+### 👤 Usuarios
+
+Los usuarios cuentan con información como:
+
+- Nombre.
+- Correo electrónico.
+- Contraseña almacenada de forma segura mediante hash.
+- Rol.
+
+Los roles principales son:
+
+```text
+usuario
+admin
+```
+
+### 🎮 Productos
+
+Los productos del catálogo contienen información relacionada con:
+
+- Identificador.
+- Nombre.
+- Precio.
+- Stock.
+- Plataforma.
+- Género.
+- Imagen.
+- Descripción.
+
+### 🧾 Ventas
+
+Las ventas almacenan información relacionada con:
+
+- Usuario.
+- Product  (`nombre`, `email`)os adquiridos.
+- Cantidades.
+- Total.
+- Fecha de registro.
+
+### 📩 Contactos
+
+Los mensajes enviados mediante el formulario de contacto pueden almacenarse con información como:
+
+- Nombre.
+- Correo.
+- Teléfono.
+- Mensaje.
+- Estado de lectura.
+
 
 ### Datos iniciales
 
@@ -281,7 +513,25 @@ Al confirmar una compra, el servidor **recalcula el total con los precios de la 
 
 ## 🔌 API REST
 
-Base URL por defecto en local: `http://localhost:3001`
+El backend proporciona una API REST para la comunicación entre el frontend y la base de datos.
+
+La URL utilizada en producción es:
+
+```text
+https://dreambox.onrender.com
+```
+
+### 🔐 Autenticación
+
+Las rutas protegidas utilizan autenticación mediante JWT.
+
+El token se envía mediante:
+
+```http
+Authorization: Bearer <token>
+```
+
+### 📚 Principales endpoints
 
 | Método | Ruta | Acceso | Descripción |
 |---|---|---|---|
@@ -300,13 +550,13 @@ Base URL por defecto en local: `http://localhost:3001`
 | `GET` | `/api/contacto` | Admin | Lista los mensajes de contacto |
 | `POST` | `/api/chat` | Público (limitado por IP) | Consulta al asistente DreamBot |
 
-Las rutas protegidas esperan la cabecera `Authorization: Bearer <token>`.
+El acceso a determinados endpoints depende del estado de autenticación y del rol del usuario.
 
 ---
 
 ## 🕹️ Uso del proyecto
 
-### Como visitante o cliente
+### 👤 Usuario / cliente
 
 1. Entra a la página de inicio y explora las secciones del producto.
 2. Ve a **TIENDA** para ver el catálogo. Usa el buscador o los filtros por plataforma.
@@ -317,10 +567,14 @@ Las rutas protegidas esperan la cabecera `Authorization: Bearer <token>`.
 7. Pregúntale a **DreamBot** (botón 🤖 en la esquina inferior derecha) qué juego te conviene.
 8. Para escribirnos, usa el formulario de la sección **Contacto** (requiere sesión iniciada).
 
-### Como administrador
+---
 
-1. Regístrate con el correo definido en `ADMIN_EMAIL` e inicia sesión (serás redirigido a `admin.html`).
-2. Desde el panel puedes:
+### 👑 Administrador
+
+Un usuario registrado con el correo definido en `ADMIN_EMAIL` e inicia sesión se le asigna el rol administrativo puede acceder al panel de administración.
+
+Desde allí puede:
+
    - Agregar un videojuego con el formulario (los géneros y plataformas se escriben como texto; las plataformas se separan con comas).
    - **Editar** o **eliminar** videojuegos, y cambiar su stock directamente en la tabla.
    - Cambiar el **rol** de otros usuarios.
@@ -330,21 +584,21 @@ Las rutas protegidas esperan la cabecera `Authorization: Bearer <token>`.
 
 ## ☁️ Despliegue
 
-Según la configuración del proyecto:
+El proyecto utiliza servicios independientes para el frontend y backend.
 
-| Parte | Plataforma | URL |
+| Componente | Plataforma | URL |
 |---|---|---|
-| **API (backend)** | Render | `https://dreambox.onrender.com` |
-| **Frontend** | GitHub Pages *(según las etiquetas Open Graph de `index.html`)* | `https://angelguayanay20.github.io/DreamBox_/` |
+| Frontend | GitHub Pages |**https://angelguayanay20.github.io/DreamBox_/**|
+| Backend/API | Render |**https://dreambox.onrender.com**|
+| Base de datos | MongoDB |La aplicación utiliza MongoDB como sistema de almacenamiento.|
+| Control de versiones | GitHub | Repositorio personal de GitHub |
 
-**Para desplegar la API en Render (u otro servicio similar):**
+### **Para desplegar la API en Render (u otro servicio similar):**
 
 1. Crea un servicio web de Node.js conectado a este repositorio.
 2. Comando de instalación: `npm install`
 3. Comando de inicio: `npm start`
 4. Define las [variables de entorno](#-variables-de-entorno) en el panel del servicio. En producción, establece `ALLOWED_ORIGINS` con la URL de tu frontend.
-
-**Para el frontend:** publica los archivos estáticos (HTML, CSS, JS y `assets/`) y verifica que `API_URL` en `script.js` apunte a tu API desplegada.
 
 > ⏱️ En planes gratuitos de Render el servidor puede "dormirse"; la primera petición puede tardar unos segundos. El sitio muestra mensajes informando cuando no logra conectarse.
 
@@ -352,28 +606,57 @@ Según la configuración del proyecto:
 
 ## ⚠️ Limitaciones conocidas
 
-Para ser transparentes sobre el estado actual del proyecto:
+Para mantener una documentación transparente, deben tenerse en cuenta las siguientes limitaciones del proyecto:
 
 - 💳 **No hay pasarela de pago real.** El checkout exige elegir un método (PayPal, tarjeta o transferencia), pero solo se valida la selección; no se procesa ningún pago.
 - 🏷️ **Los cupones de descuento aún no están disponibles.** El campo existe, pero si se completa el sitio indica que no se pueden usar.
-- 📧 El checkout indica que se enviarán recibos por correo, pero el código no incluye envío de correos.
+-📧 El checkout indica que se enviarán recibos por correo, pero el código no incluye envío de correos.
+- El backend requiere acceso a MongoDB para funcionar correctamente.
+- Las variables de entorno deben configurarse correctamente tanto en desarrollo como en producción.
 - 🔗 Los enlaces de Instagram, Facebook y TikTok del pie de contacto están como marcadores (`#`).
-- 🧪 El proyecto no incluye pruebas automatizadas ni un script de desarrollo (solo `npm start`).
+- 
+
+> Esta sección debe actualizarse conforme se incorporen nuevas funcionalidades al proyecto.
+
+---
+
+## 🧪 Estado del proyecto
+
+DreamBox se encuentra en desarrollo y cuenta actualmente con:
+
+- ✅ Frontend web.
+- ✅ Backend con Node.js y Express.
+- ✅ API REST.
+- ✅ Base de datos MongoDB.
+- ✅ Autenticación de usuarios.
+- ✅ Roles de usuario.
+- ✅ Panel administrativo.
+- ✅ Catálogo de videojuegos.
+- ✅ Carrito de compras.
+- ✅ Checkout.
+- ✅ Formulario de contacto.
+- ✅ Asistente DreamBot.
+- ✅ Diseño responsive.
+- ✅ Despliegue del frontend.
+- ✅ Despliegue del backend.
 
 ---
 
 ## 👤 Autor
 
-**Angel Guayanay**
+### Angel Guayanay
+
+Desarrollador y creador del proyecto **DreamBox**.
 
 - GitHub: [@AngelGuayanay20](https://github.com/AngelGuayanay20)
+- Repositorio: [DreamBox_](https://github.com/AngelGuayanay20/DreamBox_)
 - Ubicación: Quito, Ecuador 🇪🇨
 
 ---
 
-
-
 <div align="center">
+
+### 🎮 DreamBox
 
 *No juegas un videojuego... vives uno creado especialmente para ti.* 🎮
 
